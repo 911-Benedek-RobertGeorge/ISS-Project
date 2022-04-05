@@ -1,0 +1,7 @@
+package com.academic.ISSProject.repository;
+
+import com.academic.ISSProject.domain.Course;
+import org.springframework.data.jpa.repository.JpaRepository;
+
+public interface CourseRepository extends JpaRepository<Course,Long> {
+}
