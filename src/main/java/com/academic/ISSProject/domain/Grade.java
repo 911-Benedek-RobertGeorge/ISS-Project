@@ -11,7 +11,6 @@ import java.util.Date;
 @Data
 @Entity
 @Table(name = "grade")
-
 public class Grade {
     @Id
     @GeneratedValue
@@ -20,5 +19,9 @@ public class Grade {
     private Long studentId;
     private Long courseId;
     private int grade;
+   /* @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")*/
     private Date receivedDate;
+
+
 }

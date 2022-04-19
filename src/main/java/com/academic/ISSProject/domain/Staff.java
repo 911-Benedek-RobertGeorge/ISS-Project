@@ -1,6 +1,5 @@
 package com.academic.ISSProject.domain;
 
-
 import lombok.Data;
 
 import javax.persistence.Entity;
@@ -8,17 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
 @Entity
-@Table(name = "curriculum")
-
-public class Curriculum {
+@Data
+@Table(name = "staff")
+public class Staff {
     @Id
     @GeneratedValue
     private Long id;
-    private int year;
-    private String curriculumName;
-    private String language;
-
-
+    private Long userId;
+    private Long profileId;
 }

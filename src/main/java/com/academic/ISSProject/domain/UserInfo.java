@@ -8,17 +8,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
 @Entity
-@Table(name = "curriculum")
+@Data
+@Table(name = "user_info")
+public class UserInfo {
 
-public class Curriculum {
     @Id
     @GeneratedValue
     private Long id;
-    private int year;
-    private String curriculumName;
-    private String language;
-
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private String password;
 
 }

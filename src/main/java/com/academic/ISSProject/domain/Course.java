@@ -3,10 +3,7 @@ package com.academic.ISSProject.domain;
 import com.academic.ISSProject.domain.enums.Required;
 import lombok.Data;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 
 @Data
@@ -23,6 +20,9 @@ public class Course {
     private long teacherId;
     private long curriculumId;
     private int followers;
+    @Enumerated(EnumType.STRING)
+    @Column(columnDefinition = "enum('OPTIONAL','MANDATORY')")
     private Required required;
+
 
 }

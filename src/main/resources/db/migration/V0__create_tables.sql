@@ -9,13 +9,19 @@ create table profile(
                         age int,
                         primary key(`id`)
 );
+create table user_info(
+                          id bigint not null auto_increment,
+                          primary key(`id`),
+                          first_name varchar(255),
+                          last_name varchar(255),
+                          username varchar(255),
+                          password varchar(255)
+);
 
 create table Student(
                         id bigint not null auto_increment,
-                        first_name varchar(255),
-                        last_name varchar(255),
-                        username varchar(255),
-                        password varchar(255),
+                        user_id bigint,
+                        foreign key(`user_id`) references `user_info`(`id`),
                         primary key(`id`),
                         profile_id bigint,
                         foreign key(`profile_id`) references  `profile`(`id`)
@@ -24,25 +30,21 @@ create table Student(
 
 create table Teacher(
                         id bigint not null auto_increment,
-                        first_name varchar(255),
-                        last_name varchar(255),
-                        username varchar(255),
-                        password varchar(255),
+                        user_id bigint,
+                        foreign key(`user_id`) references `user_info`(`id`),
                         primary key(`id`),
                         profile_id bigint,
-                        foreign key(`profile_id`) references  `profile`(`id`)
-
+                        foreign key(`profile_id`) references  `profile`(`id`),
+                        chef_department bool
 );
 
 create table staff(
-                      id bigint not null auto_increment,
-                      first_name varchar(255),
-                      last_name varchar(255),
-                      username varchar(255),
-                      password varchar(255),
-                      primary key(`id`),
-                      profile_id bigint,
-                      foreign key(`profile_id`) references  `profile`(`id`)
+      id bigint not null auto_increment,
+      user_id bigint,
+      foreign key(`user_id`) references `user_info`(`id`),
+      primary key(`id`),
+      profile_id bigint,
+      foreign key(`profile_id`) references  `profile`(`id`)
 );
 
 create table curriculum(
@@ -50,9 +52,8 @@ create table curriculum(
                            year int,
                            curriculum_name varchar(255),
                            language varchar(255),
-                           primary key(`id`),
-                           student_id bigint,
-                           foreign key(`student_id`) references `student`(`id`)
+                           primary key(`id`)
+
 
 );
 create table course(
@@ -63,6 +64,8 @@ create table course(
                        maximum_students int,
                        teacher_id bigint,
                        foreign key(`teacher_id`) references `teacher`(`id`),
+                       curriculum_id bigint,
+                       foreign key(`curriculum_id`) references `curriculum`(`id`),
                        followers int,
                        required enum ('OPTIONAL','MANDATORY')
 );
@@ -80,9 +83,10 @@ create table grade (
 create table contract(
                          id bigint not null auto_increment,
                          primary key(`id`),
-                         course_id bigint,
-                         foreign key(`course_id`) references `course`(`id`),
-                         curriculum_id bigint,
-                         foreign key(`curriculum_id`) references `curriculum`(`id`)
+
+                         student_id bigint,
+                         foreign key(`student_id`) references `student`(`id`),
+                         sign_date date,
+                         fisier varchar(1000)
 );
 
