@@ -1,7 +1,9 @@
 package com.academic.ISSProject.domain;
 
 import com.academic.ISSProject.domain.enums.Required;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
@@ -9,10 +11,11 @@ import javax.persistence.*;
 @Data
 @Entity
 @Table(name = "course")
-
+@AllArgsConstructor
+@NoArgsConstructor
 public class Course {
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String courseName;
     private int credits;

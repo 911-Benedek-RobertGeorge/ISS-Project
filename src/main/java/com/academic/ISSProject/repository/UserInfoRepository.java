@@ -1,6 +1,6 @@
 package com.academic.ISSProject.repository;
 
-import com.academic.ISSProject.domain.Course;
+
 import com.academic.ISSProject.domain.UserInfo;
 import org.springframework.data.jpa.repository.JpaRepository;
 
