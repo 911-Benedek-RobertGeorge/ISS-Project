@@ -1,14 +1,13 @@
 package com.academic.ISSProject.domain;
 
-
 import lombok.Data;
 
 import javax.persistence.*;
 
-@Data
 @Entity
-@Table(name = "student")
-public class Student {
+@Data
+@Table(name = "staff")
+public class Staff {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
