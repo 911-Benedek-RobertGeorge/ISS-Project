@@ -1,6 +1,8 @@
 package com.academic.ISSProject.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,8 +21,8 @@ public class Grade {
     private Long studentId;
     private Long courseId;
     private int grade;
-   /* @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
-    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")*/
+    @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date receivedDate;
 
 
