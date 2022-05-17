@@ -1,11 +1,13 @@
 package com.academic.ISSProject.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -20,9 +22,11 @@ public class Specialization {
     private String name;
     private Integer yearsOfStudy;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "specialization")
-    private Set<Curriculum> curriculums;
+    private List<Curriculum> curriculums;
 
+    @JsonIgnore
     @ManyToMany
     @JoinTable(
             name = "enroll",

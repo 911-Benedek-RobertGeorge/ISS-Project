@@ -23,7 +23,6 @@ public class Course {
     private int credits;
     private int maximumStudents;
     private long teacherId;
-    private long curriculumId;
     private int followers;
 
     @Enumerated(EnumType.STRING)
@@ -32,4 +31,9 @@ public class Course {
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
      private Set<Grade> grades;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="curriculum_id")
+    private Curriculum curriculum;
+
 }
