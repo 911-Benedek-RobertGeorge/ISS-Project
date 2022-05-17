@@ -1,11 +1,14 @@
 package com.academic.ISSProject.controller;
 
 
+import com.academic.ISSProject.domain.Course;
+import com.academic.ISSProject.domain.Curriculum;
 import com.academic.ISSProject.domain.Specialization;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.service.implementation.EnrollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -25,4 +28,15 @@ public class EnrollController {
     public List<SpecializationDto> getAllSpecializations(){
         return enrollService.getAllSpecializations();
     }
+
+    @GetMapping("/specializations/{specializationId}")
+    public List<Curriculum> getCurriculumOfSpecialization(@PathVariable Long specializationId){
+        return enrollService.getCurriculumsOfSpecialization(specializationId);
+    }
+
+    @GetMapping("/curriculums/{currId}/courses")
+    public List<Course> getCoursesOfCurriculum(@PathVariable Long currId){
+        return null;
+    }
+
 }
