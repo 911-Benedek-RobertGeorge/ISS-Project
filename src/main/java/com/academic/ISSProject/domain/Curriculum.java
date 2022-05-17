@@ -30,6 +30,9 @@ public class Curriculum {
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="specialization_id")
     private Specialization specialization;
+
+    @OneToMany(mappedBy = "curriculum",fetch = FetchType.LAZY)
+     private List<Course> courses;
 }
 
 ///TODO get curr by specialization

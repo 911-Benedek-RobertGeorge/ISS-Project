@@ -47,7 +47,7 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public List<Course> getCoursesOfCurriculum(Long currId){
-        //return curriculumRepository.getById(currId).getc
-        return null;
+         return curriculumRepository.getById(currId).getCourses();
     }
+
 }

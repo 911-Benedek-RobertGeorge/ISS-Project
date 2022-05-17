@@ -36,7 +36,7 @@ public class EnrollController {
 
     @GetMapping("/curriculums/{currId}/courses")
     public List<Course> getCoursesOfCurriculum(@PathVariable Long currId){
-        return null;
+        return enrollService.getCoursesOfCurriculum(currId);
     }
 
 }
