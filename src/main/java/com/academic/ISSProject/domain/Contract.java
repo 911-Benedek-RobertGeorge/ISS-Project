@@ -22,9 +22,16 @@ public class Contract {
     @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date signDate;
-    /*@ManyToOne(fetch= FetchType.LAZY)
-    @JoinColumn(name="student", nullable=false) */
-    private Long studentId;
+
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="student_id")
+    private Student student;
+
+     @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="curriculum_id")
+    private Curriculum curriculum;
+
     private String fisier;
 
 }

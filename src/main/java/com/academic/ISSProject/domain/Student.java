@@ -2,8 +2,11 @@ package com.academic.ISSProject.domain;
 
 
 import lombok.Data;
+import lombok.ToString;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 @Data
 @Entity
@@ -14,4 +17,12 @@ public class Student {
     private Long id;
     private Long userId;
     private Long profileId;
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private Set<Contract> contracts;
+
+    @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
+    private Set<Grade> grades;
+
+    @ManyToMany(mappedBy = "students")
+    private Set<Specialization> specializations;
 }

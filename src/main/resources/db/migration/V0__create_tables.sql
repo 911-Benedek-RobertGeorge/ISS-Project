@@ -47,12 +47,28 @@ create table staff(
       foreign key(`profile_id`) references  `profile`(`id`)
 );
 
+
+create table specialization(
+                               id bigint not null auto_increment,
+                               primary key(`id`),
+                               years_of_study int,
+                               name varchar (255)
+
+);
+
+
+
 create table curriculum(
                            id bigint not null auto_increment,
                            year int,
                            curriculum_name varchar(255),
                            language varchar(255),
-                           primary key(`id`)
+                           primary key(`id`),
+
+
+
+                           specialization_id bigint,
+                           foreign key(`specialization_id`) references `specialization`(`id`)
 
 
 );
@@ -86,7 +102,18 @@ create table contract(
 
                          student_id bigint,
                          foreign key(`student_id`) references `student`(`id`),
+                         curriculum_id bigint,
+                         foreign key(`curriculum_id`) references `curriculum`(`id`),
                          sign_date date,
                          fisier varchar(1000)
 );
 
+create table enroll(
+                       id bigint not null auto_increment,
+                       primary key(`id`),
+                       specialization_id  bigint,
+                       foreign key (`specialization_id`) references `specialization`(`id`),
+                       student_id bigint,
+                       foreign key(`student_id`) references `student`(`id`)
+
+);
