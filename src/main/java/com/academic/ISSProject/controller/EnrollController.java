@@ -7,15 +7,13 @@ import com.academic.ISSProject.domain.Specialization;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.service.implementation.EnrollService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("/enroll")
+@CrossOrigin(origins = "http://localhost:4200")
 public class EnrollController {
     private final EnrollService enrollService;
 
@@ -24,12 +22,18 @@ public class EnrollController {
         this.enrollService = enrollService;
     }
 
-    @GetMapping("/specializations")
-    public List<SpecializationDto> getAllSpecializations(){
-        return enrollService.getAllSpecializations();
+
+    @GetMapping("/specializations/{studentId}")
+    public List<SpecializationDto> getAllSpecializations(@PathVariable Long studentId){
+        return enrollService.getAllSpecializations(studentId);
     }
 
-    @GetMapping("/specializations/{specializationId}")
+    @GetMapping("/specializations")
+    public List<Specialization> getSpecialization(){
+        return enrollService.getSpecializations();
+    }
+
+    @GetMapping("/specializations/curriculums/{specializationId}")
     public List<Curriculum> getCurriculumOfSpecialization(@PathVariable Long specializationId){
         return enrollService.getCurriculumsOfSpecialization(specializationId);
     }
