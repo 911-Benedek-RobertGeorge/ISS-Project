@@ -30,7 +30,7 @@ public class Course {
     private Required required;
 
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
-     private Set<Grade> grades;
+     private List<Grade> grades;
 
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="curriculum_id")

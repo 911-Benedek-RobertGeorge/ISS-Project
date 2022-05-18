@@ -32,5 +32,5 @@ public class Specialization {
             name = "enroll",
             joinColumns = @JoinColumn(name = "specialization_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    Set<Student> students;
+    List<Student> students;
 }
