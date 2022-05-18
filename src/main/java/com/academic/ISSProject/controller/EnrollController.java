@@ -45,7 +45,7 @@ public class EnrollController {
 
     @GetMapping("/student/{studentId}/specialization/{specializationId}")
     public Boolean checkIfEnrolled(@PathVariable Long studentId,@PathVariable Long specializationId){
-    return false;
+    return enrollService.checkIfEnrolled(studentId,specializationId);
     }
 
 }
