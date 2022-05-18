@@ -27,7 +27,7 @@ public class Specialization {
     private List<Curriculum> curriculums;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "enroll",
             joinColumns = @JoinColumn(name = "specialization_id"),

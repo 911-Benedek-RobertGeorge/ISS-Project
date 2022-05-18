@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicReference;
 
 @Service
 public class EnrollService implements IEnrollService {
@@ -33,13 +34,42 @@ public class EnrollService implements IEnrollService {
 
 
     @Override
-    public List<SpecializationDto> getAllSpecializations(){
+    public List<SpecializationDto> getAllSpecializations(Long studentId){
         List<Specialization> specializations =  specializationRepository.findAll();
         List<SpecializationDto> spec = new ArrayList<>();
         specializations.forEach(specialization -> spec.add(new SpecializationDto(
                 new SimpleSpecializationDto(specialization.getId(),specialization.getName(),specialization.getYearsOfStudy()),
-                0)));
+                getCurrentYearForSpecializationForStudent(studentId, specialization))));
         return spec;
+    }
+
+    @Override
+    public List<Specialization> getSpecializations(){
+        return specializationRepository.findAll();
+    }
+
+    private Integer getCurrentYearForSpecializationForStudent(long studentId, Specialization specializations){
+        AtomicReference<Integer> result = new AtomicReference<>();
+
+        specializations.getStudents()
+                .stream()
+                .filter(value2 -> value2.getId().equals(studentId))
+                .findFirst()
+                .ifPresentOrElse(
+                        (value3) -> {
+                            value3.getContracts().stream()
+                                    .map(contract -> contract.getCurriculum())
+                                    .map(curriculum -> curriculum.getYear())
+                                    .max(Integer::compare)
+                                    .ifPresentOrElse(
+                                        (year) -> {result.set(year+1);},
+                                        () -> {result.set(0);}
+                                    );
+                            },
+                            () -> {result.set(0);}
+                );
+
+        return result.get();
     }
 
     @Override

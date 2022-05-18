@@ -31,6 +31,7 @@ public class Student {
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades;
 
-    @ManyToMany(mappedBy = "students")
+ 
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Specialization> specializations;
 }

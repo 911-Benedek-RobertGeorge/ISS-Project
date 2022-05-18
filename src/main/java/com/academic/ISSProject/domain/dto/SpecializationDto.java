@@ -11,5 +11,4 @@ import lombok.NoArgsConstructor;
 public class SpecializationDto {
     SimpleSpecializationDto specialization;
     Integer nextYear;
-
 }
