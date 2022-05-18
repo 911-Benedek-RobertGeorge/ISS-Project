@@ -6,6 +6,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -21,11 +23,17 @@ public class Course {
     private int credits;
     private int maximumStudents;
     private long teacherId;
-    private long curriculumId;
     private int followers;
+
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('OPTIONAL','MANDATORY')")
     private Required required;
 
+    @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
+     private List<Grade> grades;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="curriculum_id")
+    private Curriculum curriculum;
 
 }

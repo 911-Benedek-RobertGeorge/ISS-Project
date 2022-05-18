@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Entity
@@ -21,4 +22,18 @@ public class Curriculum {
     private String language;
 
 
+    //private String specialization;
+
+    @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
+    private List<Contract> contracts;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="specialization_id")
+    private Specialization specialization;
+
+    @OneToMany(mappedBy = "curriculum",fetch = FetchType.LAZY)
+     private List<Course> courses;
 }
+
+///TODO get curr by specialization
+

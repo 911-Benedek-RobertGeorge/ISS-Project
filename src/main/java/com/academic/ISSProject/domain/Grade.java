@@ -18,12 +18,21 @@ public class Grade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Long studentId;
-    private Long courseId;
     private int grade;
     @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
     private Date receivedDate;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="student_id")
+    private Student student;
+
+    @ManyToOne(fetch= FetchType.LAZY)
+    @JoinColumn(name="course_id")
+    private Course course;
+
+
+
 
 
 }
