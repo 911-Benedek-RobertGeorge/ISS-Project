@@ -15,4 +15,6 @@ public interface IEnrollService {
     List<Curriculum> getCurriculumsOfSpecialization(long specializationId);
 
     List<Course> getCoursesOfCurriculum(Long currId);
+
+    Boolean chechIfEnrolled(Long studentId, Long specializationId);
 }

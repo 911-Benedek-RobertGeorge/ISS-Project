@@ -50,7 +50,7 @@ public class StudentService implements IStudentService {
         UserInfo userinfo = new UserInfo(userInfoDto);
         userinfo = userInfoRepository.save(userinfo);
         Student student = new Student();
-        student.setUserId(userinfo.getId());
+        student.setUserInfo(userinfo);
         return studentRepository.save(student);
     }
 
@@ -64,7 +64,7 @@ public class StudentService implements IStudentService {
         Profile profile = new Profile(profileDto);
         profile =  profileRepository.save(profile);
         Student theStudent = studentRepository.getById(studentId);
-        theStudent.setProfileId(profile.getId());
+        theStudent.setProfile(profile );
 
         return  studentRepository.save(theStudent);
     }
