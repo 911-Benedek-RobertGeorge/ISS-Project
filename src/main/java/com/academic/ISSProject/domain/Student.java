@@ -18,11 +18,11 @@ public class Student {
     private Long userId;
     private Long profileId;
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    private Set<Contract> contracts;
+    private List<Contract> contracts;
 
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
-    private Set<Grade> grades;
+    private List<Grade> grades;
 
-    @ManyToMany(mappedBy = "students")
-    private Set<Specialization> specializations;
+    @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
+    private List<Specialization> specializations;
 }

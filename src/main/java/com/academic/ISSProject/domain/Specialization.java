@@ -27,10 +27,10 @@ public class Specialization {
     private List<Curriculum> curriculums;
 
     @JsonIgnore
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(
             name = "enroll",
             joinColumns = @JoinColumn(name = "specialization_id"),
             inverseJoinColumns = @JoinColumn(name = "student_id"))
-    Set<Student> students;
+    List<Student> students;
 }

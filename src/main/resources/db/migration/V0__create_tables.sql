@@ -53,7 +53,6 @@ create table specialization(
                                primary key(`id`),
                                years_of_study int,
                                name varchar (255)
-
 );
 
 
