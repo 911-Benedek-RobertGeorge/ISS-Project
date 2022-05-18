@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -85,12 +86,17 @@ public class EnrollService implements IEnrollService {
     @Override
     public Boolean chechIfEnrolled(Long studentId, Long specializationId){
         Student student = studentRepository.getById(studentId);
-        for (Specialization specialization : student.getSpecializations()) {
-            if (specialization.getId() == specializationId)
-                return true;
-
+        if(student != null) {
+            for (Specialization specialization : student.getSpecializations()) {
+                if (specialization.getId() == specializationId)
+                    return true;
+            }
+            return false;
         }
-        return false;
+        else
+        {
+            throw new NoSuchElementException("The student with id "+ studentId + " does not exist");
+        }
     }
 
 }
