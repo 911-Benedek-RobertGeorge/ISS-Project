@@ -4,6 +4,7 @@ package com.academic.ISSProject.service.implementation;
 import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Curriculum;
 import com.academic.ISSProject.domain.Specialization;
+import com.academic.ISSProject.domain.dto.CurriculumDto;
 import com.academic.ISSProject.domain.dto.SimpleSpecializationDto;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.repository.CurriculumRepository;
@@ -70,8 +71,14 @@ public class EnrollService implements IEnrollService {
     }
 
     @Override
-    public List<Curriculum> getCurriculumsOfSpecialization(long specializationId){
-        return  specializationRepository.getById(specializationId).getCurriculums();
+    public List<CurriculumDto> getCurriculumsOfSpecialization(long specializationId){
+        Specialization mySpecialization = specializationRepository.getById(specializationId);
+        List<Curriculum> myCurriculums = mySpecialization.getCurriculums();
+        List<CurriculumDto> resultCurriculumsDto = new ArrayList<>();
+        myCurriculums.forEach((value) -> {
+            resultCurriculumsDto.add(new CurriculumDto(value.getId(), value.getYear(), value.getCurriculumName(), value.getLanguage()));
+        });
+        return  resultCurriculumsDto;
     }
 
 

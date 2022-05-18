@@ -1,6 +1,7 @@
 package com.academic.ISSProject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,10 +25,12 @@ public class Contract {
     private Date signDate;
 
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="student_id")
     private Student student;
 
+    @JsonIgnore
      @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="curriculum_id")
     private Curriculum curriculum;

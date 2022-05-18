@@ -1,6 +1,7 @@
 package com.academic.ISSProject.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.ToString;
 
@@ -17,12 +18,16 @@ public class Student {
     private Long id;
     private Long userId;
     private Long profileId;
+
+    @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Contract> contracts;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Specialization> specializations;
 }

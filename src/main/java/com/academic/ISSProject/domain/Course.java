@@ -1,6 +1,7 @@
 package com.academic.ISSProject.domain;
 
 import com.academic.ISSProject.domain.enums.Required;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,16 +23,18 @@ public class Course {
     private String courseName;
     private int credits;
     private int maximumStudents;
-    private long teacherId;
+    private Long teacherId;
     private int followers;
 
     @Enumerated(EnumType.STRING)
     @Column(columnDefinition = "enum('OPTIONAL','MANDATORY')")
     private Required required;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "course", fetch = FetchType.LAZY)
      private Set<Grade> grades;
 
+    @JsonIgnore
     @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="curriculum_id")
     private Curriculum curriculum;

@@ -4,6 +4,7 @@ package com.academic.ISSProject.controller;
 import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Curriculum;
 import com.academic.ISSProject.domain.Specialization;
+import com.academic.ISSProject.domain.dto.CurriculumDto;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.service.implementation.EnrollService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,11 +35,11 @@ public class EnrollController {
     }
 
     @GetMapping("/specializations/curriculums/{specializationId}")
-    public List<Curriculum> getCurriculumOfSpecialization(@PathVariable Long specializationId){
+    public List<CurriculumDto> getCurriculumOfSpecialization(@PathVariable Long specializationId){
         return enrollService.getCurriculumsOfSpecialization(specializationId);
     }
 
-    @GetMapping("/curriculums/{currId}/courses")
+    @GetMapping("/curriculums/courses/{currId}")
     public List<Course> getCoursesOfCurriculum(@PathVariable Long currId){
         return enrollService.getCoursesOfCurriculum(currId);
     }

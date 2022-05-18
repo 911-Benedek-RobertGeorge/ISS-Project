@@ -23,7 +23,7 @@ public class Specialization {
     private Integer yearsOfStudy;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "specialization")
+    @OneToMany(mappedBy = "specialization", fetch = FetchType.LAZY)
     private List<Curriculum> curriculums;
 
     @JsonIgnore
