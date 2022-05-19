@@ -1,12 +1,10 @@
 package com.academic.ISSProject.service.implementation;
 
-import com.academic.ISSProject.domain.Profile;
-import com.academic.ISSProject.domain.Role;
-import com.academic.ISSProject.domain.Student;
-import com.academic.ISSProject.domain.UserInfo;
+import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.repository.ProfileRepository;
+import com.academic.ISSProject.repository.SpecializationRepository1;
 import com.academic.ISSProject.repository.StudentRepository;
 import com.academic.ISSProject.repository.UserInfoRepository;
 import com.academic.ISSProject.service.IStudentService;
@@ -17,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -27,6 +26,9 @@ public class StudentService implements IStudentService  {
     private final UserInfoRepository userInfoRepository;
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
+
+    ///TODO ENCODE STAFF AND TEACHER TOo
+
     @Autowired
     public StudentService(StudentRepository studentRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
         this.studentRepository = studentRepository;
@@ -89,4 +91,19 @@ public class StudentService implements IStudentService  {
 
         return  studentRepository.save(theStudent);
     }
+    @Override
+    public List<Grade> getGradesForStudent(Long studentId){
+        log.info("get grades for the student  with id " + studentId + "\n");
+
+        Student student = studentRepository.getById(studentId);
+        if(student != null){
+            return student.getGrades();
+        }
+        else
+        {
+            throw new NoSuchElementException("Student with id " + studentId + " was not found");
+        }
+    }
+
+
 }

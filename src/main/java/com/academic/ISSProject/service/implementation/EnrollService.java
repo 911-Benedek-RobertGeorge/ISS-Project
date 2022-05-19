@@ -1,16 +1,15 @@
 package com.academic.ISSProject.service.implementation;
 
 
-import com.academic.ISSProject.domain.Course;
-import com.academic.ISSProject.domain.Curriculum;
-import com.academic.ISSProject.domain.Specialization;
-import com.academic.ISSProject.domain.Student;
+import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.SimpleSpecializationDto;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.repository.CurriculumRepository;
+import com.academic.ISSProject.repository.EnrollRepository;
 import com.academic.ISSProject.repository.SpecializationRepository1;
 import com.academic.ISSProject.repository.StudentRepository;
 import com.academic.ISSProject.service.IEnrollService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,17 +19,20 @@ import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
+@Slf4j
 public class EnrollService implements IEnrollService {
 
     private final SpecializationRepository1 specializationRepository;
     private final CurriculumRepository curriculumRepository;
     private final StudentRepository studentRepository;
+    private final EnrollRepository enrollRepository;
 
     @Autowired
-    public EnrollService(SpecializationRepository1 specializationRepository, CurriculumRepository curriculumRepository, StudentRepository studentRepository) {
+    public EnrollService(SpecializationRepository1 specializationRepository, CurriculumRepository curriculumRepository, StudentRepository studentRepository, EnrollRepository enrollRepository) {
         this.specializationRepository = specializationRepository;
         this.curriculumRepository = curriculumRepository;
         this.studentRepository = studentRepository;
+        this.enrollRepository = enrollRepository;
     }
 
 
@@ -92,8 +94,18 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public Boolean checkIfEnrolled(Long studentId, Long specializationId) {
-        Student student = studentRepository.getById(studentId);
-        if (student != null) {
+       // Student student = studentRepository.getById(studentId);
+        if(checkIfEnrolled(studentId,specializationId) ){
+            throw new RuntimeException("The student is already enrolled at this specialiation");
+        }
+        Long exist =  specializationRepository.checkIfEnrolled(studentId,specializationId);
+        log.info("check if enrolled returned : " + exist);
+        if( exist != null)
+        {
+            return true;
+        }
+        return false;
+       /* if (student != null) {
             for (Specialization specialization : student.getSpecializations()) {
                 if (specialization.getId() == specializationId)
                     return true;
@@ -102,8 +114,25 @@ public class EnrollService implements IEnrollService {
 
         } else {
             throw new NoSuchElementException("Student with id " + studentId + " was not found ");
-        }
+        }*/
 
+    }
+
+    @Override
+    public Enroll enrollToSpecialization(Long studentId, Long specId){
+
+        Student student = studentRepository.getById(studentId);
+        if(student == null) {
+            throw new NoSuchElementException("Student with id " + studentId + " was not found");
+
+        }
+        Specialization specialization = specializationRepository.getById(specId);
+        if (specialization == null){
+            throw new NoSuchElementException("Specialization with id " + specId + " was not found");
+
+        }
+        Enroll enroll = new Enroll(0L,student,specialization);
+        return enrollRepository.save(enroll);
     }
 
 }

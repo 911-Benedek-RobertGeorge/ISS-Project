@@ -1,6 +1,7 @@
 package com.academic.ISSProject.controller;
 
 
+import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Student;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -57,6 +58,12 @@ public class StudentController {
         this.studentService.deleteById(studentId);
         return theStudent;
     }
+    @GetMapping("/{studentId}/grades")
+    public List<Grade> getGradesForStudent(@PathVariable Long studentId){
+        return  studentService.getGradesForStudent(studentId);
+    }
+
+
 }
 
 

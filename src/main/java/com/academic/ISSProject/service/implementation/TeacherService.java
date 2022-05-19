@@ -1,19 +1,20 @@
 package com.academic.ISSProject.service.implementation;
 
-import com.academic.ISSProject.domain.Profile;
-import com.academic.ISSProject.domain.Teacher;
-import com.academic.ISSProject.domain.UserInfo;
+import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
-import com.academic.ISSProject.repository.ProfileRepository;
-import com.academic.ISSProject.repository.TeacherRepository;
-import com.academic.ISSProject.repository.UserInfoRepository;
+import com.academic.ISSProject.repository.*;
 import com.academic.ISSProject.service.ITeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -23,12 +24,18 @@ public class TeacherService implements ITeacherService {
     private final TeacherRepository teacherRepository;
     private final UserInfoRepository userInfoRepository;
     private final ProfileRepository profileRepository;
+    private final CourseRepository courseRepository;
+    private final GradeRepository gradeRepository;
+    private final StudentRepository studentRepository;
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository) {
+    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, CourseRepository courseRepository, GradeRepository gradeRepository, StudentRepository studentRepository) {
         this.teacherRepository = teacherRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
+        this.courseRepository = courseRepository;
+        this.gradeRepository = gradeRepository;
+        this.studentRepository = studentRepository;
     }
 
 
@@ -73,5 +80,31 @@ public class TeacherService implements ITeacherService {
         teacher.setProfile(profile);
 
         return teacherRepository.save(teacher);
+    }
+
+    @Override
+    public Grade postGrade(Long teacherId,
+                           Long studentId,
+                           Long courseId,
+                           Integer grade){
+        log.info("Teacher grading the student with id " + studentId +" grade " + grade );
+        Course course = courseRepository.getById(courseId);
+        if(course == null){
+            throw new NoSuchElementException("course with id " + courseId + " was not found");
+        }
+        if(course.getTeacherId() != teacherId){
+            throw new RuntimeException("The teacher is trying to grade for a course that he dont teach on");
+        }
+        Student student = studentRepository.getById(studentId);
+        if(student == null){
+            throw new NoSuchElementException("student with id "+ studentId + " was not found");
+        }
+
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
+        LocalDateTime now = LocalDateTime.now();
+       Date date =  new Date(dtf.format(now));
+        log.info("the grading date is : " + date);
+        Grade gradeObj = new Grade(0L,grade,date,student,course);
+        return gradeRepository.save(gradeObj);
     }
 }

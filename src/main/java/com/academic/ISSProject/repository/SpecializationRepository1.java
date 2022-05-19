@@ -11,6 +11,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SpecializationRepository1 extends JpaRepository<Specialization,Long> {
 
-    //@Query("SELECT e.id FROM enroll e WHere e.specialization_id = :sId and e.student_id = :specId")
-   // Long checkIfEnrolled(@Param("sId") Long studentId, @Param("specId") Long specId);
+     @Query("SELECT e.id FROM  Enroll e WHere e.student.id = :sId and e.specialization.id = :specId")
+     Long checkIfEnrolled(@Param("sId") Long studentId, @Param("specId") Long specId);
 }

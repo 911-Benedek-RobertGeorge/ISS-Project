@@ -1,5 +1,6 @@
 package com.academic.ISSProject.service;
 
+import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Teacher;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -16,4 +17,9 @@ public interface ITeacherService {
     void deleteById(long id);
 
     Teacher updateProfile(Long teacherId, ProfileDto profileDto);
+
+    Grade postGrade(Long teacherId,
+                    Long studentId,
+                    Long courseId,
+                    Integer grade);
 }

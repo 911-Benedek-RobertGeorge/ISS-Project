@@ -1,5 +1,6 @@
 package com.academic.ISSProject.controller;
 
+import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Profile;
 import com.academic.ISSProject.domain.Student;
 import com.academic.ISSProject.domain.Teacher;
@@ -57,4 +58,13 @@ public class TeacherController {
         this.teacherService.deleteById(teacherId);
         return teacher;
     }
+
+    @PostMapping("/{teacherId}/student/{studentId}/course/{courseId}/grade/{grade}")
+    public Grade postGrade(@PathVariable Long teacherId,
+                           @PathVariable Long studentId,
+                           @PathVariable Long courseId,
+                           @PathVariable Integer grade){
+        return teacherService.postGrade(teacherId,studentId,courseId,grade);
+    }
+
 }

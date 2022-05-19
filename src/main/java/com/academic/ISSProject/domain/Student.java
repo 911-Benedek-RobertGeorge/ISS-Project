@@ -29,6 +29,7 @@ public class Student {
     @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Contract> contracts;
+
     @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades;
