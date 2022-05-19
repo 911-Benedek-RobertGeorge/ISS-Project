@@ -8,6 +8,8 @@ import lombok.NoArgsConstructor;
 import org.apache.catalina.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Entity
 @Data
@@ -23,6 +25,10 @@ public class UserInfo {
     private String lastName;
     private String username;
     private String password;
+    private String role;
+
+    /*@ManyToMany(fetch = FetchType.EAGER)
+    private Collection<Role> roles = new ArrayList<>();*/
 
     public UserInfo(UserInfoDto userInfoDto) {
         firstName = userInfoDto.getFirstName();
