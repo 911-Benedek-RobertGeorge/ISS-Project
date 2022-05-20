@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.concurrent.atomic.AtomicReference;
 
 @Service
@@ -34,21 +35,21 @@ public class EnrollService implements IEnrollService {
 
 
     @Override
-    public List<SpecializationDto> getAllSpecializations(Long studentId){
-        List<Specialization> specializations =  specializationRepository.findAll();
+    public List<SpecializationDto> getAllSpecializations(Long studentId) {
+        List<Specialization> specializations = specializationRepository.findAll();
         List<SpecializationDto> spec = new ArrayList<>();
         specializations.forEach(specialization -> spec.add(new SpecializationDto(
-                new SimpleSpecializationDto(specialization.getId(),specialization.getName(),specialization.getYearsOfStudy()),
+                new SimpleSpecializationDto(specialization.getId(), specialization.getName(), specialization.getYearsOfStudy()),
                 getCurrentYearForSpecializationForStudent(studentId, specialization))));
         return spec;
     }
 
     @Override
-    public List<Specialization> getSpecializations(){
+    public List<Specialization> getSpecializations() {
         return specializationRepository.findAll();
     }
 
-    private Integer getCurrentYearForSpecializationForStudent(long studentId, Specialization specializations){
+    private Integer getCurrentYearForSpecializationForStudent(long studentId, Specialization specializations) {
         AtomicReference<Integer> result = new AtomicReference<>();
 
         specializations.getStudents()
@@ -62,35 +63,47 @@ public class EnrollService implements IEnrollService {
                                     .map(curriculum -> curriculum.getYear())
                                     .max(Integer::compare)
                                     .ifPresentOrElse(
-                                        (year) -> {result.set(year+1);},
-                                        () -> {result.set(0);}
+                                            (year) -> {
+                                                result.set(year + 1);
+                                            },
+                                            () -> {
+                                                result.set(0);
+                                            }
                                     );
-                            },
-                            () -> {result.set(0);}
+                        },
+                        () -> {
+                            result.set(0);
+                        }
                 );
 
         return result.get();
     }
 
     @Override
-    public List<Curriculum> getCurriculumsOfSpecialization(long specializationId){
-        return  specializationRepository.getById(specializationId).getCurriculums();
+    public List<Curriculum> getCurriculumsOfSpecialization(long specializationId) {
+        return specializationRepository.getById(specializationId).getCurriculums();
     }
 
 
     @Override
-    public List<Course> getCoursesOfCurriculum(Long currId){
-         return curriculumRepository.getById(currId).getCourses();
+    public List<Course> getCoursesOfCurriculum(Long currId) {
+        return curriculumRepository.getById(currId).getCourses();
     }
+
     @Override
-    public Boolean chechIfEnrolled(Long studentId, Long specializationId){
+    public Boolean checkIfEnrolled(Long studentId, Long specializationId) {
         Student student = studentRepository.getById(studentId);
-        for (Specialization specialization : student.getSpecializations()) {
-            if (specialization.getId() == specializationId)
-                return true;
+        if (student != null) {
+            for (Specialization specialization : student.getSpecializations()) {
+                if (specialization.getId() == specializationId)
+                    return true;
+            }
+            return false;
 
+        } else {
+            throw new NoSuchElementException("Student with id " + studentId + " was not found ");
         }
-        return false;
+
     }
 
 }
