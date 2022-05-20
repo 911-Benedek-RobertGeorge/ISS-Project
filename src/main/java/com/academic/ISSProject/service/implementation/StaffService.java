@@ -83,7 +83,6 @@ public class StaffService implements IStaffService {
         return staffRepository.save(staff);
     }
 
-
     @Override
     public List<StudentGradeDto> getStudentsOrderedByResults() {
         List<Student> sortedStudList = studentRepository.findAll();
@@ -98,5 +97,6 @@ public class StaffService implements IStaffService {
 
         return result;
     }
+
 
 }

@@ -3,7 +3,9 @@ package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.Staff;
 import com.academic.ISSProject.domain.dto.ProfileDto;
+
 import com.academic.ISSProject.domain.dto.StudentGradeDto;
+
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,4 +64,5 @@ public class StaffController {
     public List<StudentGradeDto> getAllStudentsSortedByAverage(){
         return this.staffService.getStudentsOrderedByResults();
     }
+
 }
