@@ -29,6 +29,12 @@ public class EnrollController {
         return enrollService.getAllSpecializations(studentId);
     }
 
+    @GetMapping("/enrolled-specializations/{studentId}")
+    public List<Specialization> getEnrolledSpecialization(@PathVariable Long studentId){
+        return enrollService.getEnrolledSpecializations(studentId);
+    }
+
+    @CrossOrigin(origins = "http://localhost:4200")
     @GetMapping("/specializations")
     public List<Specialization> getSpecialization(){
         return enrollService.getSpecializations();

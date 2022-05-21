@@ -11,6 +11,8 @@ import java.util.List;
 public interface IEnrollService {
     List<SpecializationDto> getAllSpecializations(Long studentId);
 
+    List<Specialization> getEnrolledSpecializations(Long studentId);
+
     List<Specialization> getSpecializations();
 
     List<CurriculumDto> getCurriculumsOfSpecialization(long specializationId);

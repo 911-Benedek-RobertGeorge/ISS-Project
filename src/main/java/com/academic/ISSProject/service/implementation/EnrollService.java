@@ -42,6 +42,18 @@ public class EnrollService implements IEnrollService {
     }
 
     @Override
+    public List<Specialization> getEnrolledSpecializations(Long studentId){
+        List<Specialization> specializations =  specializationRepository.findAll();
+        List<Specialization> result = new ArrayList<>();
+        specializations.forEach((value) -> {
+            if (value.getStudents().stream().map(std -> std.getId()).anyMatch(id -> id == studentId)) {
+                result.add(value);
+            }
+        });
+        return result;
+    }
+
+    @Override
     public List<Specialization> getSpecializations(){
         return specializationRepository.findAll();
     }
