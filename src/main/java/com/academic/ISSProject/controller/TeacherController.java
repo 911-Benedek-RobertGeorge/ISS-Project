@@ -65,7 +65,7 @@ public class TeacherController {
         return teacherService.postGrade(teacherId,studentId,courseId,grade);
     }
 
-    @PostMapping("/{teacherId}/curriculum/{curriculumId}optional/")
+    @PostMapping("/{teacherId}/curriculum/{curriculumId}/optional")
     public Course proposeOptionalCourse(@PathVariable Long teacherId,
                                         @PathVariable Long curriculumId,
                                         @RequestBody CourseDto courseDto){
