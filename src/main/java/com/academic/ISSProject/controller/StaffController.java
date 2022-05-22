@@ -3,6 +3,7 @@ package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.Staff;
 import com.academic.ISSProject.domain.dto.ProfileDto;
+import com.academic.ISSProject.domain.dto.StudentGradeDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import java.util.NoSuchElementException;
 @RestController
 @RequestMapping("/staff")
 public class StaffController {
-    private StaffService staffService;
+    private final StaffService staffService;
 
     @Autowired
     public StaffController(StaffService staffService) {
@@ -55,5 +56,10 @@ public class StaffController {
 
         this.staffService.deleteById(staffId);
         return staff;
+    }
+
+    @GetMapping("/getSortedByAverage")
+    public List<StudentGradeDto> getAllStudentsSortedByAverage(){
+        return this.staffService.getStudentsOrderedByResults();
     }
 }
