@@ -58,7 +58,7 @@ public class StaffController {
         return staff;
     }
 
-    @GetMapping("/getSortedByAverage")
+    @GetMapping("/sorted-average")
     public List<StudentGradeDto> getAllStudentsSortedByAverage(){
         return this.staffService.getStudentsOrderedByResults();
     }
