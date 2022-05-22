@@ -1,5 +1,7 @@
 package com.academic.ISSProject.service;
 
+import com.academic.ISSProject.domain.Enroll;
+import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Student;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -17,5 +19,9 @@ public interface IStudentService {
     public void deleteById(long id);
 
 
-    Student updateProfile(Long studentId, ProfileDto profileDto);
-}
+
+    Student updateProfile(Long studentId, ProfileDto profileDto, String username);
+
+    List<Grade> getGradesForStudent(Long studentId);
+
+ }

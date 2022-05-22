@@ -1,6 +1,7 @@
 package com.academic.ISSProject.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 
 
@@ -12,6 +13,7 @@ import java.util.Set;
 @Data
 @Entity
 @Table(name = "student")
+
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -25,13 +27,15 @@ public class Student {
     @JoinColumn(name = "profile_id", referencedColumnName = "id")
     private Profile profile;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Contract> contracts;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades;
 
- 
+    @JsonIgnore
     @ManyToMany(mappedBy = "students", fetch = FetchType.LAZY)
     private List<Specialization> specializations;
 }

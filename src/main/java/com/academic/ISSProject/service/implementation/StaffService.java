@@ -11,6 +11,7 @@ import com.academic.ISSProject.repository.UserInfoRepository;
 import com.academic.ISSProject.service.IStaffService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -26,15 +27,18 @@ public class StaffService implements IStaffService {
     private final UserInfoRepository userInfoRepository;
     private final ProfileRepository profileRepository;
     private final StudentRepository studentRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    public StaffService(StaffRepository staffRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, StudentRepository studentRepository) {
+    @Autowired
+    public StaffService(StaffRepository staffRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
         this.staffRepository = staffRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
         this.studentRepository = studentRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
+
 
 
     @Override
@@ -57,6 +61,10 @@ public class StaffService implements IStaffService {
     public Staff save(UserInfoDto userInfoDto) {
 
         UserInfo userinfo = new UserInfo(userInfoDto);
+
+        userinfo.setRole("STAFF");
+        userinfo.setPassword(passwordEncoder.encode(userinfo.getPassword()));
+
         userinfo = userInfoRepository.save(userinfo);
 
         Staff staff = new Staff();

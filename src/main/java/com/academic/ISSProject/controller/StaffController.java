@@ -62,4 +62,6 @@ public class StaffController {
     public List<StudentGradeDto> getAllStudentsSortedByAverage(){
         return this.staffService.getStudentsOrderedByResults();
     }
+
+    ///todo set teacher degree
 }

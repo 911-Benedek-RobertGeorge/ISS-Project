@@ -23,6 +23,6 @@ public class Teacher {
     private UserInfo userInfo;
 
     private Boolean chefDepartment;
-
+    private String degree;
 
 }
