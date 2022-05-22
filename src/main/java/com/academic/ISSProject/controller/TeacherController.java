@@ -1,9 +1,7 @@
 package com.academic.ISSProject.controller;
 
-import com.academic.ISSProject.domain.Grade;
-import com.academic.ISSProject.domain.Profile;
-import com.academic.ISSProject.domain.Student;
-import com.academic.ISSProject.domain.Teacher;
+import com.academic.ISSProject.domain.*;
+import com.academic.ISSProject.domain.dto.CourseDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.TeacherService;
@@ -66,5 +64,13 @@ public class TeacherController {
                            @PathVariable Integer grade){
         return teacherService.postGrade(teacherId,studentId,courseId,grade);
     }
+
+    @PostMapping("/{teacherId}/curriculum/{curriculumId}optional/")
+    public Course proposeOptionalCourse(@PathVariable Long teacherId,
+                                        @PathVariable Long curriculumId,
+                                        @RequestBody CourseDto courseDto){
+        return teacherService.proposeOptionalCourse(teacherId,curriculumId,courseDto);
+    }
+
 
 }

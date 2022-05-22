@@ -1,15 +1,17 @@
 package com.academic.ISSProject.service.implementation;
 
 import com.academic.ISSProject.domain.*;
+import com.academic.ISSProject.domain.dto.CourseDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
+import com.academic.ISSProject.domain.enums.Required;
 import com.academic.ISSProject.repository.*;
 import com.academic.ISSProject.service.ITeacherService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -27,15 +29,20 @@ public class TeacherService implements ITeacherService {
     private final CourseRepository courseRepository;
     private final GradeRepository gradeRepository;
     private final StudentRepository studentRepository;
+    private final CurriculumRepository curriculumRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, CourseRepository courseRepository, GradeRepository gradeRepository, StudentRepository studentRepository) {
+    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, CourseRepository courseRepository, GradeRepository gradeRepository, StudentRepository studentRepository, CurriculumRepository curriculumRepository, PasswordEncoder passwordEncoder) {
         this.teacherRepository = teacherRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
         this.courseRepository = courseRepository;
         this.gradeRepository = gradeRepository;
         this.studentRepository = studentRepository;
+        this.curriculumRepository = curriculumRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
 
@@ -56,6 +63,8 @@ public class TeacherService implements ITeacherService {
     public Teacher save(UserInfoDto userInfoDto) {
         log.info("Save the user with userInfo: " + userInfoDto.toString() + "\n");
         UserInfo userInfo = new UserInfo(userInfoDto);
+        userInfo.setRole("TEACHER");
+        userInfo.setPassword(passwordEncoder.encode(userInfo.getPassword()));
         userInfo = userInfoRepository.save(userInfo);
 
         Teacher teacher = new Teacher();
@@ -106,5 +115,24 @@ public class TeacherService implements ITeacherService {
         log.info("the grading date is : " + date);
         Grade gradeObj = new Grade(0L,grade,date,student,course);
         return gradeRepository.save(gradeObj);
+    }
+
+    @Override
+    public Course proposeOptionalCourse(Long teacherId, Long curriculumId, CourseDto courseDto){
+        Teacher teacher = teacherRepository.getById(teacherId);
+        if (teacher.getDegree().equals( "lab") || teacher.getDegree().equals("seminary"))
+            throw new RuntimeException("the teacher is not at least lecturer");
+
+        List<Long> courses = courseRepository.getAllOptionalCoursesByTeacherId(teacherId);
+          if(courses.size() > 2 ){
+              throw new RuntimeException("The teacher already had proposed 2 optional courses");
+          }
+          Curriculum curriculum = curriculumRepository.getById(curriculumId);
+          if(curriculum == null){
+              throw new RuntimeException("Curriculum not found! ");
+          }
+          Course course = new Course(courseDto.getCourseName(),courseDto.getCredits(),80,teacherId,0, Required.OPTIONAL,curriculum);
+
+          return courseRepository.save(course);
     }
 }

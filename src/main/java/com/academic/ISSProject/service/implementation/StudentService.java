@@ -4,7 +4,6 @@ import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.repository.ProfileRepository;
-import com.academic.ISSProject.repository.SpecializationRepository1;
 import com.academic.ISSProject.repository.StudentRepository;
 import com.academic.ISSProject.repository.UserInfoRepository;
 import com.academic.ISSProject.service.IStudentService;
@@ -13,7 +12,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -62,9 +60,7 @@ public class StudentService implements IStudentService  {
         UserInfo userinfo = new UserInfo(userInfoDto);
 
         Student student = new Student();
-        List<Role> roles = new ArrayList<>();
-        roles.add(new Role("STUDENT"));
-        //userinfo.setRoles(roles);
+
         userinfo.setRole("STUDENT");
         userinfo.setPassword(passwordEncoder.encode(userinfo.getPassword()));
         userinfo = userInfoRepository.save(userinfo);
@@ -80,14 +76,20 @@ public class StudentService implements IStudentService  {
         studentRepository.deleteById(id);
     }
 
+
     @Override
-    public Student updateProfile(Long studentId, ProfileDto profileDto) {
+   // @PreAuthorize("authentication.principal.username == #username")
+    public Student updateProfile(Long studentId, ProfileDto profileDto, String username) {
         log.info("Update the student profile with id " + studentId + "\n");
 
         Profile profile = new Profile(profileDto);
         profile =  profileRepository.save(profile);
         Student theStudent = studentRepository.getById(studentId);
-        theStudent.setProfile(profile );
+        if(!theStudent.getUserInfo().getUsername().equals(username))
+        {
+            throw new SecurityException("Security Exception, you cant modify someone else profile");
+        }
+        theStudent.setProfile(profile);
 
         return  studentRepository.save(theStudent);
     }

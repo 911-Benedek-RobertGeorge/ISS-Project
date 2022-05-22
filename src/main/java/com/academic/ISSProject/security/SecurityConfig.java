@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
@@ -21,6 +22,8 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 @RequiredArgsConstructor
 @Slf4j
+@EnableGlobalMethodSecurity(prePostEnabled = true)
+
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private final UserDetailsService userDetailsService;
     private final PasswordEncoder bCryptPasswordEncoder;
@@ -41,7 +44,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/register").permitAll();
 
-        http.authorizeRequests().antMatchers(HttpMethod.GET,"/students/**").hasAnyAuthority("STUDENT","TEACHER","STAFF");
+       /* http.authorizeRequests().antMatchers(HttpMethod.GET,"/students/**").hasAnyAuthority("STUDENT","TEACHER","STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/students/**").hasAnyAuthority( "TEACHER","STAFF");
          http.authorizeRequests().antMatchers(HttpMethod.PUT,"/students/**").hasAnyAuthority( "STUDENT");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/students/**").hasAnyAuthority( "STAFF");
@@ -53,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/staff/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/staff/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/staff/**").hasAnyAuthority( "STAFF");
-
-        http.authorizeRequests().anyRequest().authenticated();
-
+*/
+        //http.authorizeRequests().anyRequest().authenticated();
+        http.authorizeRequests().anyRequest().permitAll();
 
         http.addFilter(customAuthentificationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

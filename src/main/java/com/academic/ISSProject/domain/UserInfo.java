@@ -2,6 +2,7 @@ package com.academic.ISSProject.domain;
 
 
 import com.academic.ISSProject.domain.dto.UserInfoDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class UserInfo {
     private String firstName;
     private String lastName;
     private String username;
+    @JsonIgnore
     private String password;
     private String role;
 
