@@ -94,8 +94,7 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public Boolean checkIfEnrolled(Long studentId, Long specializationId) {
-       // Student student = studentRepository.getById(studentId);
-        if(checkIfEnrolled(studentId,specializationId) ){
+         if(checkIfEnrolled(studentId,specializationId) ){
             throw new RuntimeException("The student is already enrolled at this specialiation");
         }
         Long exist =  specializationRepository.checkIfEnrolled(studentId,specializationId);
@@ -105,16 +104,6 @@ public class EnrollService implements IEnrollService {
             return true;
         }
         return false;
-       /* if (student != null) {
-            for (Specialization specialization : student.getSpecializations()) {
-                if (specialization.getId() == specializationId)
-                    return true;
-            }
-            return false;
-
-        } else {
-            throw new NoSuchElementException("Student with id " + studentId + " was not found ");
-        }*/
 
     }
 
