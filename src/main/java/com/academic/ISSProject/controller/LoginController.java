@@ -1,6 +1,7 @@
 package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.UserInfo;
+import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.UserService;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
@@ -9,9 +10,7 @@ import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,8 +22,7 @@ import static org.springframework.http.HttpStatus.FORBIDDEN;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
-@RequestMapping("/login")
-@Slf4j
+ @Slf4j
 public class LoginController {
 
 
@@ -35,7 +33,7 @@ public class LoginController {
         this.userService = userService;
     }
 
-    @GetMapping("/refresh-token")
+    @GetMapping("/login/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
         if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
@@ -76,5 +74,9 @@ public class LoginController {
         }else{
             throw new RuntimeException("Refresh token is missing");
         }
+    }
+    @PostMapping("/register")
+    public String register(@RequestBody UserInfoDto userInfo){
+       return userService.register(userInfo);
     }
 }
