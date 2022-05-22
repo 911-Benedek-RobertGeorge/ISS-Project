@@ -19,8 +19,8 @@ public class Grade {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private int grade;
-    @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
-    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date receivedDate;
 
     @ManyToOne(fetch= FetchType.LAZY)

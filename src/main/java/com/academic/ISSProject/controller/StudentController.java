@@ -1,19 +1,26 @@
 package com.academic.ISSProject.controller;
 
 
+import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Student;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.StudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.hibernate.ObjectNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
- import org.springframework.web.bind.annotation.*;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
 @RestController
 @RequestMapping("/students")
+@Slf4j
 public class StudentController {
     private StudentService studentService;
 
@@ -24,6 +31,7 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getAll(){
+
         return this.studentService.findAll();
     }
 
@@ -37,13 +45,21 @@ public class StudentController {
     }
 
     @PostMapping
-    public Student addStudent( @RequestBody UserInfoDto userInfoDto){
+    public Student addStudent(@RequestBody UserInfoDto userInfoDto){
         return studentService.save(userInfoDto);
+    }
+    public User getCurrentUser(Principal principal) {
+
+        return ((User) SecurityContextHolder.getContext()
+                .getAuthentication()
+                .getPrincipal());
     }
 
     @PutMapping("/{studentId}/profile")
-    public Student updateProfile(@PathVariable Long studentId,@RequestBody ProfileDto profileDto){
-        return studentService.updateProfile(studentId,profileDto);
+    public Student updateProfile(@PathVariable Long studentId,@RequestBody ProfileDto profileDto ,Principal principal  ){
+
+        String username = principal.getName();
+        return studentService.updateProfile(studentId,profileDto,username);
     }
 
     @DeleteMapping("/{studentId}")
@@ -57,6 +73,12 @@ public class StudentController {
         this.studentService.deleteById(studentId);
         return theStudent;
     }
+    @GetMapping("/{studentId}/grades")
+    public List<Grade> getGradesForStudent(@PathVariable Long studentId){
+        return  studentService.getGradesForStudent(studentId);
+    }
+
+
 }
 
 
