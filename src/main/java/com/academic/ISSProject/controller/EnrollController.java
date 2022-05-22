@@ -3,6 +3,7 @@ package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Curriculum;
+import com.academic.ISSProject.domain.Enroll;
 import com.academic.ISSProject.domain.Specialization;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.service.implementation.EnrollService;
@@ -48,4 +49,8 @@ public class EnrollController {
     return enrollService.checkIfEnrolled(studentId,specializationId);
     }
 
+    @PostMapping("/student/{studentId}/specialization/{specializationId}")
+    public Enroll enrollToSpecialization(@PathVariable Long studentId,@PathVariable Long specializationId){
+        return enrollService.enrollToSpecialization(studentId,specializationId);
+    }
 }

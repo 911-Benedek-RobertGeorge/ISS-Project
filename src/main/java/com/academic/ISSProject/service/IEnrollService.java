@@ -2,6 +2,7 @@ package com.academic.ISSProject.service;
 
 import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Curriculum;
+import com.academic.ISSProject.domain.Enroll;
 import com.academic.ISSProject.domain.Specialization;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 
@@ -18,4 +19,6 @@ public interface IEnrollService {
 
 
     Boolean checkIfEnrolled(Long studentId, Long specializationId);
+
+    Enroll enrollToSpecialization(Long studentId, Long specId);
 }
