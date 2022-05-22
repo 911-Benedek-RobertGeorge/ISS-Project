@@ -96,6 +96,9 @@ public class TeacherService implements ITeacherService {
                            Long studentId,
                            Long courseId,
                            Integer grade){
+        if(grade > 10 || grade < 1)
+            throw new RuntimeException("The teacher is trying to grade with a wrong grade");
+
         log.info("Teacher grading the student with id " + studentId +" grade " + grade );
         Course course = courseRepository.getById(courseId);
         if(course == null){
