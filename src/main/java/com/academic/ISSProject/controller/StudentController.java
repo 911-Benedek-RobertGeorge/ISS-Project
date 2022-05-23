@@ -33,7 +33,6 @@ public class StudentController {
 
     @GetMapping
     public List<Student> getAll(){
-
         return this.studentService.findAll();
     }
 
@@ -75,9 +74,11 @@ public class StudentController {
         this.studentService.deleteById(studentId);
         return theStudent;
     }
-    @GetMapping("/{studentId}/grades")
-    public List<Grade> getGradesForStudent(@PathVariable Long studentId){
-        return  studentService.getGradesForStudent(studentId);
+    @GetMapping("/{studentId}/specialization/{specId}/year/{year}/grades")
+    public List<Grade> getGradesForStudent(@PathVariable Long studentId,
+                                           @PathVariable Long specId,
+                                           @PathVariable Long year){
+        return  studentService.getGradesForStudent(studentId,specId,year);
     }
 
     @GetMapping("@GetMapping('/{courseId}/course')\n" +

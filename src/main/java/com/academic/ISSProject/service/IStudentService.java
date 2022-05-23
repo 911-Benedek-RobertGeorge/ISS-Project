@@ -19,8 +19,6 @@ public interface IStudentService {
     public void deleteById(long id);
 
     Student updateProfile(Long studentId, ProfileDto profileDto, String username);
-
-    List<Grade> getGradesForStudent(Long studentId);
-
+    List<Grade> getGradesForStudent(Long studentId, Long specId, Long year);
     List<Student> getStudentsOfACourse(Long courseId);
- }
+}
