@@ -2,6 +2,7 @@ package com.academic.ISSProject.controller;
 
 
 import com.academic.ISSProject.domain.Staff;
+import com.academic.ISSProject.domain.dto.AverageDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.StudentGradeDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -61,6 +62,11 @@ public class StaffController {
     @GetMapping("/sorted-average")
     public List<StudentGradeDto> getAllStudentsSortedByAverage(){
         return this.staffService.getStudentsOrderedByResults();
+    }
+
+    @GetMapping("/sorted-average/year/{year}")
+    public List<AverageDto> getAllStudentsSortedByAverageInYear(@PathVariable Long year){
+        return staffService.getAllStudentsSortedByAverageInYear(year);
     }
 
     ///todo set teacher degree
