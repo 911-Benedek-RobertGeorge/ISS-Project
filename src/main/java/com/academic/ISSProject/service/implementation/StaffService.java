@@ -1,6 +1,7 @@
 package com.academic.ISSProject.service.implementation;
 
 import com.academic.ISSProject.domain.*;
+import com.academic.ISSProject.domain.dto.AverageDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.StudentGradeDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -103,6 +104,25 @@ public class StaffService implements IStaffService {
 
         result.sort(Comparator.comparing(StudentGradeDto::getAverage));
 
+        return result;
+    }
+    @Override
+    public List<AverageDto> getAllStudentsSortedByAverageInYear(Long year) {
+        List<Student> sortedStudList = studentRepository.findAll();
+        List<AverageDto> result = new ArrayList<>();
+
+        sortedStudList.forEach((value)->{
+            List<Contract> spec  = value.getContracts();
+
+            spec.forEach(s ->{ if(s.getCurriculum().getYear() == year){
+                Double average = value.getGrades().stream().mapToDouble(Grade::getGrade).average().orElse(0.0);
+                result.add(new AverageDto(value.getUserInfo().getUsername(), average));
+            }
+
+            });
+
+        });
+        result.sort(Comparator.comparing(AverageDto::getAverage));
         return result;
     }
 }
