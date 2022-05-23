@@ -111,10 +111,10 @@ public class TeacherService implements ITeacherService {
         if(student == null){
             throw new NoSuchElementException("student with id "+ studentId + " was not found");
         }
-
+        ///todo verify student - course
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
         LocalDateTime now = LocalDateTime.now();
-       Date date =  new Date(dtf.format(now));
+        Date date =  new Date(dtf.format(now));
         log.info("the grading date is : " + date);
         Grade gradeObj = new Grade(0L,grade,date,student,course);
         return gradeRepository.save(gradeObj);
@@ -127,7 +127,7 @@ public class TeacherService implements ITeacherService {
             throw new RuntimeException("the teacher is not at least lecturer");
 
         List<Long> courses = courseRepository.getAllOptionalCoursesByTeacherId(teacherId);
-          if(courses.size() > 2 ){
+          if(courses.size() >= 2 ){
               throw new RuntimeException("The teacher already had proposed 2 optional courses");
           }
           Curriculum curriculum = curriculumRepository.getById(curriculumId);
