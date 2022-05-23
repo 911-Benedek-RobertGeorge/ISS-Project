@@ -3,9 +3,7 @@ package com.academic.ISSProject.service.implementation;
 import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
-import com.academic.ISSProject.repository.ProfileRepository;
-import com.academic.ISSProject.repository.StudentRepository;
-import com.academic.ISSProject.repository.UserInfoRepository;
+import com.academic.ISSProject.repository.*;
 import com.academic.ISSProject.service.IStudentService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +22,20 @@ public class StudentService implements IStudentService  {
     private final UserInfoRepository userInfoRepository;
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
+    private final CourseRepository courseRepository;
+    private final ContractRepository contractRepository;
 
     ///TODO ENCODE STAFF AND TEACHER TOo
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
+    public StudentService(StudentRepository studentRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder, CourseRepository courseRepository,
+                          ContractRepository contractRepository) {
         this.studentRepository = studentRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
         this.passwordEncoder = passwordEncoder;
+        this.courseRepository = courseRepository;
+        this.contractRepository = contractRepository;
     }
 
 
@@ -107,5 +110,7 @@ public class StudentService implements IStudentService  {
         }
     }
 
-
+    public List<Student> getStudentsOfACourse(Long courseId){
+        return this.contractRepository.getAllStudentsOfACurriculum(courseRepository.getById(courseId).getCurriculum().getId());
+    }
 }

@@ -22,4 +22,5 @@ public interface IStudentService {
 
     List<Grade> getGradesForStudent(Long studentId);
 
+    List<Student> getStudentsOfACourse(Long courseId);
  }

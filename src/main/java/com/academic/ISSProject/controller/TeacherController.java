@@ -1,6 +1,7 @@
 package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.*;
+import com.academic.ISSProject.domain.dto.Course2Dto;
 import com.academic.ISSProject.domain.dto.CourseDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
@@ -8,6 +9,7 @@ import com.academic.ISSProject.service.implementation.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -72,6 +74,21 @@ public class TeacherController {
         return teacherService.proposeOptionalCourse(teacherId,curriculumId,courseDto);
     }
 
+    @GetMapping("/{teacherId}/courses")
+    public List<Course2Dto> getTeacherCourses(@PathVariable Long teacherId){
+        List<Course> courses = teacherService.getCourses(teacherId);
+        List<Course2Dto> courseDtoList = new ArrayList<>();
 
+        courses.forEach((value) -> {
+            courseDtoList.add(new Course2Dto(value.getId(), value.getCourseName()));
+        });
+
+        return courseDtoList;
+    }
+
+    @GetMapping("/{courseId}/course")
+    public List<Grade> getGradesOfCourse(@PathVariable Long courseId){
+        return teacherService.getGradesOfCourse(courseId);
+    }
 
 }

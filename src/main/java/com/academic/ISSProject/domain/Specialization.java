@@ -2,19 +2,19 @@ package com.academic.ISSProject.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Data
-@Entity
-@Table(name = "specialization")
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "specialization")
 public class Specialization {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

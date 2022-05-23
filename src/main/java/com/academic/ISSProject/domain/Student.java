@@ -2,7 +2,7 @@ package com.academic.ISSProject.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import lombok.*;
 
 
 import javax.persistence.*;
@@ -10,10 +10,13 @@ import javax.persistence.*;
 import java.util.List;
 import java.util.Set;
 
-@Data
+@Setter
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 @Entity
 @Table(name = "student")
-
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

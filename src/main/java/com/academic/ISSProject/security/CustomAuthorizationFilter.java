@@ -44,10 +44,15 @@ public class CustomAuthorizationFilter extends OncePerRequestFilter {
             if(authorizationHeader != null && authorizationHeader.startsWith("Bearer ")){
                 try {
                     String token = authorizationHeader.substring("Bearer ".length());
+                    log.info("Here1");
                     Algorithm algorithm = Algorithm.HMAC256("${jwt.secret}".getBytes());
+                    log.info("Here2");
                     JWTVerifier verifier = JWT.require(algorithm).build();
+                    log.info("Here3");
                     DecodedJWT decodedJWT = verifier.verify(token);
+                    log.info("Here4");
                     String username = decodedJWT.getSubject();
+                    log.info("Here5");
                     ///TODO OR IS a simple string
                     String[] roles = decodedJWT.getClaim("role").asArray(String.class);
                     log.info(roles.toString());

@@ -27,4 +27,6 @@ public interface ITeacherService {
 
 
     Course proposeOptionalCourse(Long teacherId, Long curriculumId, CourseDto courseDto);
+    List<Course> getCourses(Long teacherId);
+    List<Grade> getGradesOfCourse(Long courseId);
 }

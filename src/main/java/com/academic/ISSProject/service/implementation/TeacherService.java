@@ -18,6 +18,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -137,5 +138,17 @@ public class TeacherService implements ITeacherService {
           Course course = new Course(courseDto.getCourseName(),courseDto.getCredits(),80,teacherId,0, Required.OPTIONAL,curriculum);
 
           return courseRepository.save(course);
+    }
+
+    @Override
+    public List<Course> getCourses(Long teacherId){
+        return courseRepository.getCoursesByTeacherId(teacherId);
+    }
+
+    @Override
+    public List<Grade> getGradesOfCourse(Long courseId){
+        return gradeRepository.findAll().stream().filter((value) -> {
+            return value.getCourse().getId() == courseId;
+        }).collect(Collectors.toList());
     }
 }

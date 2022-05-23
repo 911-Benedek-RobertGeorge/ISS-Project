@@ -1,19 +1,19 @@
 package com.academic.ISSProject.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
-@Entity
-@Table(name = "enroll")
+@Setter
+@Getter
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
+@Entity
+@Table(name = "enroll")
 public class Enroll {
 
     @Id

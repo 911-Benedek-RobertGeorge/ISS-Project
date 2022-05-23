@@ -4,6 +4,7 @@ package com.academic.ISSProject.controller;
 import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Student;
 import com.academic.ISSProject.domain.dto.ProfileDto;
+import com.academic.ISSProject.domain.dto.SimpleStudentDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.StudentService;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +16,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -78,7 +80,20 @@ public class StudentController {
         return  studentService.getGradesForStudent(studentId);
     }
 
+    @GetMapping("@GetMapping('/{courseId}/course')\n" +
+            "    public List<Grade> getGradesOfCourse(@PathVariable Long courseId){\n" +
+            "        return \n" +
+            "    }/{courseId}/course")
+    public List<SimpleStudentDto> getStudentsOfACourse(@PathVariable Long courseId){
+        List<Student> students =  studentService.getStudentsOfACourse(courseId);
+        List<SimpleStudentDto> result = new ArrayList<>();
 
+        students.forEach((value) -> {
+            result.add(new SimpleStudentDto(value.getId(), value.getUserInfo().getFirstName(), value.getUserInfo().getLastName()));
+        });
+
+        return result;
+    }
 }
 
 
