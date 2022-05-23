@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         CustomAuthentificationFilter customAuthentificationFilter = new CustomAuthentificationFilter(authenticationManagerBean());
         //customAuthentificationFilter.setFilterProcessesUrl("");
         http.csrf().disable();
-        log.info("antmatchers setUp\n");
+        log.info("antmatchers setUp : AUTHORIZATION \n");
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/register").permitAll();

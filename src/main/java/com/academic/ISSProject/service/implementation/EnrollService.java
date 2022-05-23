@@ -38,6 +38,7 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public List<SpecializationDto> getAllSpecializations(Long studentId) {
+        log.info("Get specializations");
         List<Specialization> specializations = specializationRepository.findAll();
         List<SpecializationDto> spec = new ArrayList<>();
         specializations.forEach(specialization -> spec.add(new SpecializationDto(
@@ -52,6 +53,7 @@ public class EnrollService implements IEnrollService {
     }
 
     private Integer getCurrentYearForSpecializationForStudent(long studentId, Specialization specializations) {
+        log.info("get Current Year specialization for student");
         AtomicReference<Integer> result = new AtomicReference<>();
 
         specializations.getStudents()
@@ -83,12 +85,14 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public List<Curriculum> getCurriculumsOfSpecialization(long specializationId) {
+        log.info("get curriculums of specialization");
         return specializationRepository.getById(specializationId).getCurriculums();
     }
 
 
     @Override
     public List<Course> getCoursesOfCurriculum(Long currId) {
+        log.info("get courses of curriculum");
         return curriculumRepository.getById(currId).getCourses();
     }
 
