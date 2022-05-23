@@ -12,8 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.Optional;
 
 
@@ -94,17 +94,20 @@ public class StudentService implements IStudentService  {
         return  studentRepository.save(theStudent);
     }
     @Override
-    public List<Grade> getGradesForStudent(Long studentId){
+    public List<Grade> getGradesForStudent(Long studentId, Long specId, Long year){
         log.info("get grades for the student  with id " + studentId + "\n");
 
-        Student student = studentRepository.getById(studentId);
-        if(student != null){
-            return student.getGrades();
-        }
-        else
-        {
-            throw new NoSuchElementException("Student with id " + studentId + " was not found");
-        }
+        Student student = studentRepository.getById(studentId); // this throw an error if not found
+
+        List<Grade> grades = student.getGrades();
+        List<Grade> filteredGrades = new ArrayList<>();
+        grades.forEach(grade -> {
+            if(grade.getCourse().getCurriculum().getSpecialization().getId() == specId
+            && grade.getCourse().getCurriculum().getYear() == year){
+                filteredGrades.add(grade);
+            }
+        });
+         return filteredGrades;
     }
 
 
