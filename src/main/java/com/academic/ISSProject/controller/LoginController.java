@@ -33,6 +33,12 @@ public class LoginController {
         this.userService = userService;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/login/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -75,6 +81,12 @@ public class LoginController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
+
+    /**
+     *
+     * @param userInfo
+     * @return
+     */
     @PostMapping("/register")
     public String register(@RequestBody UserInfoDto userInfo){
        return userService.register(userInfo);
