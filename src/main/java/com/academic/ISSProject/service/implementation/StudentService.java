@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Service
@@ -94,12 +95,15 @@ public class StudentService implements IStudentService  {
         return  studentRepository.save(theStudent);
     }
     @Override
-    public List<Grade> getGradesForStudent(Long studentId){
+    public List<Grade> getGradesForStudent(Long studentId, Long specId, Long year){
         log.info("get grades for the student  with id " + studentId + "\n");
 
         Student student = studentRepository.getById(studentId);
         if(student != null){
-            return student.getGrades();
+            return student.getGrades().stream().filter(grade ->
+                grade.getCourse().getCurriculum().getYear() == year &&
+                    grade.getCourse().getCurriculum().getSpecialization().getId() == specId)
+                    .collect(Collectors.toList());
         }
         else
         {
