@@ -35,5 +35,3 @@ INSERT INTO contract(student_id, curriculum_id) VALUES (1,1),
 
 
 
-
-
