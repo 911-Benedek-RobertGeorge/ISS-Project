@@ -2,6 +2,7 @@ package com.academic.ISSProject.service.implementation;
 
 import com.academic.ISSProject.domain.*;
 import com.academic.ISSProject.domain.dto.CourseDto;
+import com.academic.ISSProject.domain.dto.GradeDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.domain.enums.Required;
@@ -14,10 +15,7 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -114,10 +112,10 @@ public class TeacherService implements ITeacherService {
         }
         ///todo verify student - course
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        Date date =  new Date(dtf.format(now));
+        Date date =  new Date();
         log.info("the grading date is : " + date);
         Grade gradeObj = new Grade(0L,grade,date,student,course);
+        log.info("Teacher grading the student with id " + studentId +" grade " + grade );
         return gradeRepository.save(gradeObj);
     }
 
@@ -146,9 +144,16 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public List<Grade> getGradesOfCourse(Long courseId){
-        return gradeRepository.findAll().stream().filter((value) -> {
-            return value.getCourse().getId() == courseId;
-        }).collect(Collectors.toList());
+    public List<GradeDto> getGradesOfCourse(Long courseId){
+        List<Grade> gradeList = gradeRepository.findAll().stream().filter((value) -> {
+                                    return value.getCourse().getId() == courseId;
+                                }).collect(Collectors.toList());
+        List<GradeDto> result = new ArrayList<>();
+
+        gradeList.forEach((value) -> {
+            result.add(new GradeDto(value.getId(), value.getGrade(), value.getReceivedDate(), value.getStudent().getUserInfo().getFirstName(), value.getStudent().getUserInfo().getLastName(), value.getCourse().getCourseName()));
+        });
+
+        return result;
     }
 }

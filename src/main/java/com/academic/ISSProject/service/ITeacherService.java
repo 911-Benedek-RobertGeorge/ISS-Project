@@ -4,6 +4,7 @@ import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Grade;
 import com.academic.ISSProject.domain.Teacher;
 import com.academic.ISSProject.domain.dto.CourseDto;
+import com.academic.ISSProject.domain.dto.GradeDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 
@@ -28,5 +29,5 @@ public interface ITeacherService {
 
     Course proposeOptionalCourse(Long teacherId, Long curriculumId, CourseDto courseDto);
     List<Course> getCourses(Long teacherId);
-    List<Grade> getGradesOfCourse(Long courseId);
+    List<GradeDto> getGradesOfCourse(Long courseId);
 }

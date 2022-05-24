@@ -81,10 +81,7 @@ public class StudentController {
         return  studentService.getGradesForStudent(studentId,specId,year);
     }
 
-    @GetMapping("@GetMapping('/{courseId}/course')\n" +
-            "    public List<Grade> getGradesOfCourse(@PathVariable Long courseId){\n" +
-            "        return \n" +
-            "    }/{courseId}/course")
+    @GetMapping("/{courseId}/course")
     public List<SimpleStudentDto> getStudentsOfACourse(@PathVariable Long courseId){
         List<Student> students =  studentService.getStudentsOfACourse(courseId);
         List<SimpleStudentDto> result = new ArrayList<>();

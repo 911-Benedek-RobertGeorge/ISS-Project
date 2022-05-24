@@ -5,11 +5,13 @@ import com.academic.ISSProject.domain.Course;
 import com.academic.ISSProject.domain.Curriculum;
 import com.academic.ISSProject.domain.Enroll;
 import com.academic.ISSProject.domain.Specialization;
+import com.academic.ISSProject.domain.dto.CurriculumDto;
 import com.academic.ISSProject.domain.dto.SpecializationDto;
 import com.academic.ISSProject.service.implementation.EnrollService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -35,8 +37,13 @@ public class EnrollController {
     }
 
     @GetMapping("/specializations/curriculums/{specializationId}")
-    public List<Curriculum> getCurriculumOfSpecialization(@PathVariable Long specializationId){
-        return enrollService.getCurriculumsOfSpecialization(specializationId);
+    public List<CurriculumDto> getCurriculumOfSpecialization(@PathVariable Long specializationId){
+        List<Curriculum> curriculumList = enrollService.getCurriculumsOfSpecialization(specializationId);
+        List<CurriculumDto> result = new ArrayList<>();
+        curriculumList.forEach((value) -> {
+            result.add(new CurriculumDto(value.getId(), value.getYear(), value.getCurriculumName(), value.getLanguage(), value.getSpecialization().getId()));
+        });
+        return result;
     }
 
     @GetMapping("/curriculums/{currId}/courses")

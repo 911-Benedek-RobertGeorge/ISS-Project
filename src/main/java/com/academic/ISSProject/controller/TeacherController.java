@@ -1,10 +1,7 @@
 package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.*;
-import com.academic.ISSProject.domain.dto.Course2Dto;
-import com.academic.ISSProject.domain.dto.CourseDto;
-import com.academic.ISSProject.domain.dto.ProfileDto;
-import com.academic.ISSProject.domain.dto.UserInfoDto;
+import com.academic.ISSProject.domain.dto.*;
 import com.academic.ISSProject.service.implementation.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -87,7 +84,7 @@ public class TeacherController {
     }
 
     @GetMapping("/{courseId}/course")
-    public List<Grade> getGradesOfCourse(@PathVariable Long courseId){
+    public List<GradeDto> getGradesOfCourse(@PathVariable Long courseId){
         return teacherService.getGradesOfCourse(courseId);
     }
 

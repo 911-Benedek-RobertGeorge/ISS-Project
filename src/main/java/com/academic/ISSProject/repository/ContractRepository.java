@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface ContractRepository extends JpaRepository<Contract,Long> {
-    @Query("SELECT c.student FROM Contract c WHere c.curriculum = :curriculumId")
+    @Query("SELECT c.student FROM Contract c WHere c.curriculum.id = :curriculumId")
     List<Student> getAllStudentsOfACurriculum(@Param("curriculumId") Long teacherId);
 
 }

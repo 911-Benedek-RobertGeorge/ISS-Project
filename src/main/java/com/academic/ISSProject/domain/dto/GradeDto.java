@@ -11,8 +11,12 @@ import java.util.Date;
 @AllArgsConstructor
 public class GradeDto {
 
-    private int grade;
-    @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
-    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+    private Long id;
+    private Integer grade;
+    @DateTimeFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private Date receivedDate;
+    private String firstName;
+    private String lastName;
+    private String courseName;
 }

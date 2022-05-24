@@ -1,6 +1,7 @@
 package com.academic.ISSProject.domain;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -23,7 +24,7 @@ public class Curriculum {
 
 
     //private String specialization;
-
+    @JsonIgnore
     @OneToMany(mappedBy = "curriculum", fetch = FetchType.LAZY)
     private List<Contract> contracts;
 
@@ -31,6 +32,7 @@ public class Curriculum {
     @JoinColumn(name="specialization_id")
     private Specialization specialization;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "curriculum",fetch = FetchType.LAZY)
      private List<Course> courses;
 }
