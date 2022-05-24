@@ -8,6 +8,7 @@ import com.academic.ISSProject.service.implementation.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -61,8 +62,10 @@ public class TeacherController {
      * @return the updated Teacher
      */
     @PutMapping("/{teacherId}/profile")
-    public Teacher updateProfile(@PathVariable Long teacherId, @RequestBody ProfileDto profileDto){
-        return teacherService.updateProfile(teacherId, profileDto);
+    public Teacher updateProfile(@PathVariable Long teacherId, @RequestBody ProfileDto profileDto, Principal principal){
+        String username = principal.getName();
+
+        return teacherService.updateProfile(teacherId, profileDto, username);
     }
 
     /**

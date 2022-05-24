@@ -74,6 +74,7 @@ public class StudentController {
     public Student updateProfile(@PathVariable Long studentId,@RequestBody ProfileDto profileDto ,Principal principal  ){
 
         String username = principal.getName();
+
         return studentService.updateProfile(studentId,profileDto,username);
     }
 

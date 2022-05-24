@@ -81,12 +81,17 @@ public class StaffService implements IStaffService {
     }
 
     @Override
-    public Staff updateProfile(Long staffId, ProfileDto profileDto) {
+    public Staff updateProfile(Long staffId, ProfileDto profileDto,String username) {
         log.info("Update profile staff's profile with id= " + staffId + "\n");
         Profile profile = new Profile(profileDto);
         profile =  profileRepository.save(profile);
 
         Staff staff = staffRepository.getById(staffId);
+        if(!staff.getUserInfo().getUsername().equals(username))
+        {
+            throw new SecurityException("Security Exception, you cant modify someone else profile");
+        }
+
         staff.setProfile(profile);
 
         return staffRepository.save(staff);

@@ -10,6 +10,7 @@ import com.academic.ISSProject.service.implementation.StaffService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -63,8 +64,10 @@ public class StaffController {
      * @return updated staff object
      */
     @PutMapping("/{staffId}/profile")
-    public Staff updateProfile(@PathVariable Long staffId, @RequestBody ProfileDto profileDto){
-        return staffService.updateProfile(staffId, profileDto);
+    public Staff updateProfile(@PathVariable Long staffId, @RequestBody ProfileDto profileDto , Principal principal){
+        String username = principal.getName();
+
+        return staffService.updateProfile(staffId, profileDto,username);
     }
 
     /**

@@ -18,7 +18,8 @@ public interface ITeacherService {
 
     void deleteById(long id);
 
-    Teacher updateProfile(Long teacherId, ProfileDto profileDto);
+
+    Teacher updateProfile(Long teacherId, ProfileDto profileDto, String username);
 
     Grade postGrade(Long teacherId,
                     Long studentId,
