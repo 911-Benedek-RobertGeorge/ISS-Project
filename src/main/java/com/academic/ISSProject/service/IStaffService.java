@@ -17,7 +17,8 @@ public interface IStaffService {
 
     void deleteById(long id);
 
-    Staff updateProfile(Long staffId, ProfileDto profileDto);
+
+    Staff updateProfile(Long staffId, ProfileDto profileDto, String username);
 
     List<StudentGradeDto> getStudentsOrderedByResults();
 
