@@ -37,5 +37,6 @@ public class UserInfo {
         lastName = userInfoDto.getLastName();
         username = userInfoDto.getUsername();
         password = userInfoDto.getPassword();
+        role = userInfoDto.getRole();
     }
 }

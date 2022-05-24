@@ -38,6 +38,7 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public List<SpecializationDto> getAllSpecializations(Long studentId) {
+        log.info("Get specializations");
         List<Specialization> specializations = specializationRepository.findAll();
         List<SpecializationDto> spec = new ArrayList<>();
         specializations.forEach(specialization -> spec.add(new SpecializationDto(
@@ -52,6 +53,7 @@ public class EnrollService implements IEnrollService {
     }
 
     private Integer getCurrentYearForSpecializationForStudent(long studentId, Specialization specializations) {
+        log.info("get Current Year specialization for student");
         AtomicReference<Integer> result = new AtomicReference<>();
 
         specializations.getStudents()
@@ -83,19 +85,20 @@ public class EnrollService implements IEnrollService {
 
     @Override
     public List<Curriculum> getCurriculumsOfSpecialization(long specializationId) {
+        log.info("get curriculums of specialization");
         return specializationRepository.getById(specializationId).getCurriculums();
     }
 
 
     @Override
     public List<Course> getCoursesOfCurriculum(Long currId) {
+        log.info("get courses of curriculum");
         return curriculumRepository.getById(currId).getCourses();
     }
 
     @Override
     public Boolean checkIfEnrolled(Long studentId, Long specializationId) {
-       // Student student = studentRepository.getById(studentId);
-        if(checkIfEnrolled(studentId,specializationId) ){
+         if(checkIfEnrolled(studentId,specializationId) ){
             throw new RuntimeException("The student is already enrolled at this specialiation");
         }
         Long exist =  specializationRepository.checkIfEnrolled(studentId,specializationId);
@@ -105,16 +108,6 @@ public class EnrollService implements IEnrollService {
             return true;
         }
         return false;
-       /* if (student != null) {
-            for (Specialization specialization : student.getSpecializations()) {
-                if (specialization.getId() == specializationId)
-                    return true;
-            }
-            return false;
-
-        } else {
-            throw new NoSuchElementException("Student with id " + studentId + " was not found ");
-        }*/
 
     }
 

@@ -57,13 +57,14 @@ public class CustomAuthentificationFilter extends UsernamePasswordAuthentication
                 .withExpiresAt(new Date(System.currentTimeMillis()  + 30 * 60 * 1000))
                 .withIssuer(request.getRequestURL().toString())
                 .sign(algorithm);
-        /*response.setHeader("access_token",access_token);
-        response.setHeader("refresh_token",refresh_token);*/
-
+        response.setHeader("access_token",access_token);
+        response.setHeader("refresh_token",refresh_token);
+        response.setHeader("Access-Control-Allow-Origin", "*");
         Map<String,String> tokens = new HashMap<>();
         tokens.put("access_token",access_token);
         tokens.put("refresh_token",refresh_token);
         response.setContentType(APPLICATION_JSON_VALUE);
+        log.info("user authenticated");
         new ObjectMapper().writeValue(response.getOutputStream(),tokens);
     }
 }
