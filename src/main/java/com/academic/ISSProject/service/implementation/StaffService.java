@@ -10,6 +10,7 @@ import com.academic.ISSProject.repository.StaffRepository;
 import com.academic.ISSProject.repository.StudentRepository;
 import com.academic.ISSProject.repository.UserInfoRepository;
 import com.academic.ISSProject.service.IStaffService;
+import com.academic.ISSProject.validators.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -29,14 +30,17 @@ public class StaffService implements IStaffService {
     private final ProfileRepository profileRepository;
     private final StudentRepository studentRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileValidator profileValidator;
+
 
     @Autowired
-    public StaffService(StaffRepository staffRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, StudentRepository studentRepository, PasswordEncoder passwordEncoder) {
+    public StaffService(StaffRepository staffRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, StudentRepository studentRepository, PasswordEncoder passwordEncoder, ProfileValidator profileValidator) {
         this.staffRepository = staffRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
         this.studentRepository = studentRepository;
         this.passwordEncoder = passwordEncoder;
+        this.profileValidator = profileValidator;
     }
 
 
@@ -84,6 +88,8 @@ public class StaffService implements IStaffService {
     public Staff updateProfile(Long staffId, ProfileDto profileDto) {
         log.info("Update profile staff's profile with id= " + staffId + "\n");
         Profile profile = new Profile(profileDto);
+        profileValidator.validate(profile);
+
         profile =  profileRepository.save(profile);
 
         Staff staff = staffRepository.getById(staffId);

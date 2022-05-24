@@ -12,7 +12,6 @@ import java.util.Date;
 public class GradeDto {
 
     private int grade;
-    @DateTimeFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
-    @JsonFormat(pattern = "dd-MM-yyyy@HH:mm:ss")
+
     private Date receivedDate;
 }

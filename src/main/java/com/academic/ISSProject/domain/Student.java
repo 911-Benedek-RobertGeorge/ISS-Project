@@ -2,6 +2,7 @@ package com.academic.ISSProject.domain;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.Data;
 
 
@@ -32,6 +33,7 @@ public class Student {
     private List<Contract> contracts;
 
     @JsonIgnore
+    @JsonManagedReference
     @OneToMany(mappedBy = "student", fetch = FetchType.LAZY)
     private List<Grade> grades;
 

@@ -35,7 +35,7 @@ INSERT INTO contract(student_id, curriculum_id) VALUES (1,1),
 
 
 
-INSERT INTO course(course_name, credits, maximum_students, curriculum_id, followers, required) VALUES
+/*INSERT INTO course(course_name, credits, maximum_students, curriculum_id, followers, required) VALUES
                                                                                                    ('Logică matematică si teoria mulţimilor', 6, 200, 1, 0, 'MANDATORY'),
                                                                                                    ('Analiză matematică 1 (pe r)', 6, 200, 1, 0, 'MANDATORY'),
                                                                                                    ('Geometrie 1 (geometrie analitica)', 6, 200, 1, 0, 'MANDATORY'),
@@ -50,5 +50,5 @@ INSERT INTO course(course_name, credits, maximum_students, curriculum_id, follow
                                                                                                    ('Analiză matematică 2 (calcul diferenţial şi integral în r^n)', 6, 200, 2, 0, 'MANDATORY'),
                                                                                                    ('Structuri de date', 6, 200, 2, 0, 'MANDATORY'),
                                                                                                    ('Aplicatii ale geometriei in informatica', 6, 200, 2, 0, 'OPTIONAL'),
-                                                                                                   ('Probleme avansate de analiza', 6, 200, 2, 0, 'OPTIONAL');
+                                                                                                   ('Probleme avansate de analiza', 6, 200, 2, 0, 'OPTIONAL');*/
 

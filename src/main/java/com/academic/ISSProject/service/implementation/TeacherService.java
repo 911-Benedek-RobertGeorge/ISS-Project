@@ -7,20 +7,15 @@ import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.domain.enums.Required;
 import com.academic.ISSProject.repository.*;
 import com.academic.ISSProject.service.ITeacherService;
+import com.academic.ISSProject.validators.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -34,10 +29,12 @@ public class TeacherService implements ITeacherService {
     private final StudentRepository studentRepository;
     private final CurriculumRepository curriculumRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileValidator profileValidator;
+
 
 
     @Autowired
-    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, CourseRepository courseRepository, GradeRepository gradeRepository, StudentRepository studentRepository, CurriculumRepository curriculumRepository, PasswordEncoder passwordEncoder) {
+    public TeacherService(TeacherRepository teacherRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, CourseRepository courseRepository, GradeRepository gradeRepository, StudentRepository studentRepository, CurriculumRepository curriculumRepository, PasswordEncoder passwordEncoder, ProfileValidator profileValidator) {
         this.teacherRepository = teacherRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
@@ -46,6 +43,7 @@ public class TeacherService implements ITeacherService {
         this.studentRepository = studentRepository;
         this.curriculumRepository = curriculumRepository;
         this.passwordEncoder = passwordEncoder;
+        this.profileValidator = profileValidator;
     }
 
 
@@ -86,6 +84,8 @@ public class TeacherService implements ITeacherService {
     public Teacher updateProfile(Long teacherId, ProfileDto profileDto) {
         log.info("Update profile with id: " + teacherId + "with profile data: " + profileDto.toString() + "\n");
         Profile profile = new Profile(profileDto);
+        profileValidator.validate(profile);
+
         profile = profileRepository.save(profile);
 
         Teacher teacher = teacherRepository.getById(teacherId);
@@ -115,11 +115,10 @@ public class TeacherService implements ITeacherService {
             throw new NoSuchElementException("student with id "+ studentId + " was not found");
         }
 
-        Date date = new Date();
-        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
 
-         Date now = new Date();
-         log.info(now.toString());
+        LocalDate localDate = LocalDate.now();log.info(localDate.toString());
+
+        Date now =  java.sql.Date.valueOf(localDate);
         Grade gradeObj = new Grade(0L,grade,now,student,course);
         return gradeRepository.save(gradeObj);
     }

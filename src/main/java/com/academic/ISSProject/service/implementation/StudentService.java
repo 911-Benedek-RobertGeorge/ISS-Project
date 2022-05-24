@@ -7,6 +7,7 @@ import com.academic.ISSProject.repository.ProfileRepository;
 import com.academic.ISSProject.repository.StudentRepository;
 import com.academic.ISSProject.repository.UserInfoRepository;
 import com.academic.ISSProject.service.IStudentService;
+import com.academic.ISSProject.validators.ProfileValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -25,15 +26,17 @@ public class StudentService implements IStudentService  {
     private final UserInfoRepository userInfoRepository;
     private final ProfileRepository profileRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ProfileValidator profileValidator;
 
     ///TODO ENCODE STAFF AND TEACHER TOo
 
     @Autowired
-    public StudentService(StudentRepository studentRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder) {
+    public StudentService(StudentRepository studentRepository, UserInfoRepository userInfoRepository, ProfileRepository profileRepository, PasswordEncoder passwordEncoder, ProfileValidator profileValidator) {
         this.studentRepository = studentRepository;
         this.userInfoRepository = userInfoRepository;
         this.profileRepository = profileRepository;
         this.passwordEncoder = passwordEncoder;
+        this.profileValidator = profileValidator;
     }
 
 
@@ -83,7 +86,9 @@ public class StudentService implements IStudentService  {
         log.info("Update the student profile with id " + studentId + "\n");
 
         Profile profile = new Profile(profileDto);
+        profileValidator.validate(profile);
         profile =  profileRepository.save(profile);
+
         Student theStudent = studentRepository.getById(studentId);
         if(!theStudent.getUserInfo().getUsername().equals(username))
         {
