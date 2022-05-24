@@ -29,11 +29,20 @@ public class StudentController {
         this.studentService = studentService;
     }
 
+    /**
+     * Endpoint that receives the list with all Students
+     * @return List<Students>>
+     */
     @GetMapping
     public List<Student> getAll(){
         return this.studentService.findAll();
     }
 
+    /**
+     * Endpoint that returns the student having the requested ID
+     * @param studentId the id of the student
+     * @return Student Object
+     */
     @GetMapping("/{studentId}")
     public Student getStudent(@PathVariable long studentId){
         Student theStudent = studentService.findById(studentId);
@@ -43,12 +52,24 @@ public class StudentController {
         return theStudent;
     }
 
+    /**
+     * Post endpoint that adds a new student
+     * @param userInfoDto user's data send
+     * @return the saved Student
+     */
     @PostMapping
     public Student addStudent(@RequestBody UserInfoDto userInfoDto){
         return studentService.save(userInfoDto);
     }
 
 
+    /**
+     * Endpoint that updates a user's profile
+     * @param studentId the student's id
+     * @param profileDto information about the updated profile
+     * @param principal
+     * @return the updated Student
+     */
     @PutMapping("/{studentId}/profile")
     public Student updateProfile(@PathVariable Long studentId,@RequestBody ProfileDto profileDto ,Principal principal  ){
 
@@ -56,6 +77,11 @@ public class StudentController {
         return studentService.updateProfile(studentId,profileDto,username);
     }
 
+    /**
+     * Endpoint that deletes a student
+     * @param studentId the student's id
+     * @return deleted student
+     */
     @DeleteMapping("/{studentId}")
     public Student deleteStudent(@PathVariable long studentId) {
         Student theStudent = this.studentService.findById(studentId);
@@ -67,6 +93,14 @@ public class StudentController {
         this.studentService.deleteById(studentId);
         return theStudent;
     }
+
+    /**
+     * Endpoint that return the grades for a specific Student
+     * @param studentId the student's id
+     * @param specId specialisation's id
+     * @param year the year of the student
+     * @return List<Grades>
+     */
     @GetMapping("/{studentId}/specialization/{specId}/year/{year}/grades")
     public List<Grade> getGradesForStudent(@PathVariable Long studentId,
                                            @PathVariable Long specId,
