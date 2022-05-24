@@ -47,12 +47,7 @@ public class StudentController {
     public Student addStudent(@RequestBody UserInfoDto userInfoDto){
         return studentService.save(userInfoDto);
     }
-    public User getCurrentUser(Principal principal) {
 
-        return ((User) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal());
-    }
 
     @PutMapping("/{studentId}/profile")
     public Student updateProfile(@PathVariable Long studentId,@RequestBody ProfileDto profileDto ,Principal principal  ){
