@@ -8,6 +8,7 @@ import com.academic.ISSProject.service.implementation.TeacherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.NoSuchElementException;
 
@@ -94,7 +95,7 @@ public class TeacherController {
     public Grade postGrade(@PathVariable Long teacherId,
                            @PathVariable Long studentId,
                            @PathVariable Long courseId,
-                           @PathVariable Integer grade){
+                           @PathVariable Integer grade) throws ParseException {
         return teacherService.postGrade(teacherId,studentId,courseId,grade);
     }
 

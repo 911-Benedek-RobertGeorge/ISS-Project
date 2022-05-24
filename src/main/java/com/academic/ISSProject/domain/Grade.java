@@ -23,11 +23,11 @@ public class Grade {
     @JsonFormat(pattern = "dd-MM-yyyy")
     private Date receivedDate;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="student_id")
     private Student student;
 
-    @ManyToOne(fetch= FetchType.LAZY)
+    @ManyToOne(fetch= FetchType.EAGER)
     @JoinColumn(name="course_id")
     private Course course;
 

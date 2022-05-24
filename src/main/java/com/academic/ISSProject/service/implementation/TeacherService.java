@@ -12,6 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -95,7 +98,7 @@ public class TeacherService implements ITeacherService {
     public Grade postGrade(Long teacherId,
                            Long studentId,
                            Long courseId,
-                           Integer grade){
+                           Integer grade) throws ParseException {
         if(grade > 10 || grade < 1)
             throw new RuntimeException("The teacher is trying to grade with a wrong grade");
 
@@ -104,19 +107,20 @@ public class TeacherService implements ITeacherService {
         if(course == null){
             throw new NoSuchElementException("course with id " + courseId + " was not found");
         }
-        if(course.getTeacherId() != teacherId){
+       /* if(course.getTeacherId() != teacherId){
             throw new RuntimeException("The teacher is trying to grade for a course that he dont teach on");
-        }
+        } */
         Student student = studentRepository.getById(studentId);
         if(student == null){
             throw new NoSuchElementException("student with id "+ studentId + " was not found");
         }
-        ///todo verify student - course
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd-MM-yyyy");
-        LocalDateTime now = LocalDateTime.now();
-        Date date =  new Date(dtf.format(now));
-        log.info("the grading date is : " + date);
-        Grade gradeObj = new Grade(0L,grade,date,student,course);
+
+        Date date = new Date();
+        SimpleDateFormat DateFor = new SimpleDateFormat("dd/MM/yyyy");
+
+         Date now = new Date();
+         log.info(now.toString());
+        Grade gradeObj = new Grade(0L,grade,now,student,course);
         return gradeRepository.save(gradeObj);
     }
 

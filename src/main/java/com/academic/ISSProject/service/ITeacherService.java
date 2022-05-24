@@ -7,6 +7,7 @@ import com.academic.ISSProject.domain.dto.CourseDto;
 import com.academic.ISSProject.domain.dto.ProfileDto;
 import com.academic.ISSProject.domain.dto.UserInfoDto;
 
+import java.text.ParseException;
 import java.util.List;
 
 public interface ITeacherService {
@@ -23,7 +24,7 @@ public interface ITeacherService {
     Grade postGrade(Long teacherId,
                     Long studentId,
                     Long courseId,
-                    Integer grade);
+                    Integer grade) throws ParseException;
 
 
     Course proposeOptionalCourse(Long teacherId, Long curriculumId, CourseDto courseDto);
