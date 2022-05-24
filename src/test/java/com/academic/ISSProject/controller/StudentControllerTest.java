@@ -1,6 +1,7 @@
 package com.academic.ISSProject.controller;
 
 import com.academic.ISSProject.domain.Student;
+import com.academic.ISSProject.domain.dto.UserInfoDto;
 import com.academic.ISSProject.service.implementation.StudentService;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 class StudentControllerTest {
@@ -44,6 +46,11 @@ class StudentControllerTest {
 
     @Test
     void addStudent() {
+        Student student = new Student();
+        student.setId(1L);
+        when(studentService.save(any(UserInfoDto.class))).thenReturn(student);
+        assertEquals(testController.addStudent(new UserInfoDto()),student);
+
 
     }
 
