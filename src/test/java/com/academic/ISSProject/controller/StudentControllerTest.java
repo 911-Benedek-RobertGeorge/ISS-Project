@@ -37,10 +37,12 @@ class StudentControllerTest {
         list.add(student1);
         when(studentService.findAll()).thenReturn(list);
         assertEquals(testController.getAll(),list);
+
     }
 
     @Test
     void getStudent() {
+
         Student student = new Student();
         student.setId(1L);
         when(studentService.findById(1L)).thenReturn(student);
@@ -50,11 +52,11 @@ class StudentControllerTest {
 
     @Test
     void addStudent() {
+
         Student student = new Student();
         student.setId(1L);
         when(studentService.save(any(UserInfoDto.class))).thenReturn(student);
         assertEquals(testController.addStudent(new UserInfoDto()),student);
-
 
     }
 
