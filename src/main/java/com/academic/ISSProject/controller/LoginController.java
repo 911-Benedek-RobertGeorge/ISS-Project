@@ -91,4 +91,10 @@ public class LoginController {
     public String register(@RequestBody UserInfoDto userInfo){
        return userService.register(userInfo);
     }
+
+
+    @GetMapping("/username/{username}")
+    public Long getIdByUsername(@PathVariable String username){
+        return userService.getUserId(username);
+    }
 }
