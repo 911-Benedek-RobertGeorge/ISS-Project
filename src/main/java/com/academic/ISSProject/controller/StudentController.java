@@ -62,12 +62,6 @@ public class StudentController {
         return studentService.save(userInfoDto);
     }
 
-    public User getCurrentUser(Principal principal) {
-
-        return ((User) SecurityContextHolder.getContext()
-                .getAuthentication()
-                .getPrincipal());
-    }
 
     /**
      * Endpoint that updates a user's profile

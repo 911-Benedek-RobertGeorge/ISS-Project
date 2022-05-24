@@ -79,8 +79,7 @@ public class StudentService implements IStudentService  {
 
 
     @Override
-   // @PreAuthorize("authentication.principal.username == #username")
-    public Student updateProfile(Long studentId, ProfileDto profileDto, String username) {
+     public Student updateProfile(Long studentId, ProfileDto profileDto, String username) {
         log.info("Update the student profile with id " + studentId + "\n");
 
         Profile profile = new Profile(profileDto);
