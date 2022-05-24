@@ -22,6 +22,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
+import java.util.NoSuchElementException;
 
 @Service
 @Slf4j
@@ -85,5 +87,35 @@ public class UserService implements UserDetailsService {
         }
 
         return "Successful registered! ";
+    }
+
+
+    public Long getUserId(String username) {
+        Long userId = getUserInfoByUsername(username).getId();
+        List<Teacher> teacher = teacherRepository.findAll();
+        if(teacher == null){
+            throw new NoSuchElementException("No teacher");
+        }
+
+
+
+        for (Teacher t : teacher) {
+            if(t.getUserInfo().getId() == userId){
+                return t.getId();
+            }
+        }
+        List<Student> students = studentRepository.findAll();
+        for (Student t : students) {
+            if(t.getUserInfo().getId() == userId){
+                return t.getId();
+            }
+        }
+         List<Staff> staff = staffRepository.findAll();
+        for (Staff t : staff) {
+            if(t.getUserInfo().getId() == userId){
+                return t.getId();
+            }
+        }
+        throw new NoSuchElementException("no user with that id of userInfo found");
     }
 }
