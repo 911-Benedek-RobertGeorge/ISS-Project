@@ -80,12 +80,16 @@ public class TeacherService implements ITeacherService {
     }
 
     @Override
-    public Teacher updateProfile(Long teacherId, ProfileDto profileDto) {
+    public Teacher updateProfile(Long teacherId, ProfileDto profileDto, String username) {
         log.info("Update profile with id: " + teacherId + "with profile data: " + profileDto.toString() + "\n");
         Profile profile = new Profile(profileDto);
         profile = profileRepository.save(profile);
 
         Teacher teacher = teacherRepository.getById(teacherId);
+        if(!teacher.getUserInfo().getUsername().equals(username))
+        {
+            throw new SecurityException("Security Exception, you cant modify someone else profile");
+        }
         teacher.setProfile(profile);
 
         return teacherRepository.save(teacher);

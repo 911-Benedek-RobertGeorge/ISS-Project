@@ -33,6 +33,12 @@ public class LoginController {
         this.userService = userService;
     }
 
+    /**
+     *
+     * @param request
+     * @param response
+     * @throws IOException
+     */
     @GetMapping("/login/refresh-token")
     public void refreshToken(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String authorizationHeader = request.getHeader(AUTHORIZATION);
@@ -49,7 +55,7 @@ public class LoginController {
 
                 String access_token = JWT.create()
                         .withSubject(user.getUsername())
-                        .withExpiresAt(new Date(System.currentTimeMillis()  + 10 * 60 * 1000))
+                        .withExpiresAt(new Date(System.currentTimeMillis()  + 24 * 60 * 60 * 1000))
                         .withIssuer(request.getRequestURL().toString())
                         .withClaim("role", roles )
                         .sign(algorithm);
@@ -75,8 +81,20 @@ public class LoginController {
             throw new RuntimeException("Refresh token is missing");
         }
     }
+
+    /**
+     *
+     * @param userInfo
+     * @return
+     */
     @PostMapping("/register")
     public String register(@RequestBody UserInfoDto userInfo){
        return userService.register(userInfo);
+    }
+
+
+    @GetMapping("/username/{username}")
+    public Long getIdByUsername(@PathVariable String username){
+        return userService.getUserId(username);
     }
 }

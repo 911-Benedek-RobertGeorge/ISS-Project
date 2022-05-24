@@ -37,28 +37,27 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         CustomAuthentificationFilter customAuthentificationFilter = new CustomAuthentificationFilter(authenticationManagerBean());
-        //customAuthentificationFilter.setFilterProcessesUrl("");
         http.csrf().disable();
         log.info("antmatchers setUp : AUTHORIZATION \n");
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.authorizeRequests().antMatchers("/login/**").permitAll();
         http.authorizeRequests().antMatchers("/register").permitAll();
 
-       /* http.authorizeRequests().antMatchers(HttpMethod.GET,"/students/**").hasAnyAuthority("STUDENT","TEACHER","STAFF");
+         http.authorizeRequests().antMatchers(HttpMethod.GET,"/students/**").hasAnyAuthority("STUDENT","TEACHER","STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/students/**").hasAnyAuthority( "TEACHER","STAFF");
          http.authorizeRequests().antMatchers(HttpMethod.PUT,"/students/**").hasAnyAuthority( "STUDENT");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/students/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/teachers/**").hasAnyAuthority("TEACHER","STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/teachers/**").hasAnyAuthority("TEACHER");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/teachers/**").hasAnyAuthority("STAFF");
-        http.authorizeRequests().antMatchers(HttpMethod.POST,"/teachers/**").hasAnyAuthority("STAFF");
+        http.authorizeRequests().antMatchers(HttpMethod.POST,"/teachers/**").hasAnyAuthority("STAFF","TEACHER");
         http.authorizeRequests().antMatchers(HttpMethod.GET,"/staff/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.POST,"/staff/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.DELETE,"/staff/**").hasAnyAuthority( "STAFF");
         http.authorizeRequests().antMatchers(HttpMethod.PUT,"/staff/**").hasAnyAuthority( "STAFF");
-*/
-        //http.authorizeRequests().anyRequest().authenticated();
-        http.authorizeRequests().anyRequest().permitAll();
+
+        http.authorizeRequests().anyRequest().authenticated();
+        //http.authorizeRequests().anyRequest().permitAll();
 
         http.addFilter(customAuthentificationFilter);
         http.addFilterBefore(new CustomAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);

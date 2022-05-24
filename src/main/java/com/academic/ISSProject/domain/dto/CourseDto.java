@@ -5,9 +5,11 @@ import com.academic.ISSProject.domain.Curriculum;
 import com.academic.ISSProject.domain.enums.Required;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class CourseDto {
 
     private String courseName;
